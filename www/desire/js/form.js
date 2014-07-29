@@ -33,8 +33,9 @@ function startLoad(){
 
 function finishedLoad(){
 	CordovaExec(function(item){
-                setTimeout(function(){populateFormWithItem(item);
-},15000)
+		populateFormWithItem(item)
+        //setTimeout(function(){populateFormWithItem(item);
+		//},15000)
     }, "FormPlugin", "Populate");
     
     $('#topBarLeftButton').click(function(e){
@@ -124,7 +125,7 @@ function populateFormWithItem(item){
 			dinheiroRadio.click();
 		}else if (item.debit == 1) {
 			debitoRadio.click();
-		}else if (item.creditoCard == 1) {
+		}else if (item.creditCard == 1) {
 			creditoRadio.click();
 		}
 		despesaRadio.click();

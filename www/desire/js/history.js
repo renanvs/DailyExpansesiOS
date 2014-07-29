@@ -188,7 +188,7 @@ $('#filterButton').click(function(){
 	addToFilterJson(key, value);
 	
 	CordovaExec(function(filterList){
-		getHistoryController().itensList = JSON.parse(filterList);
+		getHistoryController().itensList = filterList;
 		apply();
 	}, "HistoryPlugin", "Filter",[JSON.stringify(filterJson)]);
 
@@ -257,25 +257,28 @@ function finishedLoad(){
 
 function apply(){
 
-	if (!hasMock()) {
+	//if (!hasMock()) {
 		getHistoryController().$apply();
-	};
+	//};
 }
 
 function hasMock(){
-	var list = $('script');
-	var hasMockBool = false;
-	for (var i = 0; i < list.length; i++) {
-		var src = list[i].getAttribute('src');
-		if (src == null) {
-			continue;
-		};
-		if (src.indexOf('mock') >= 0) {
-			hasMockBool = true;
-			break;
-		}
-	};
-	return hasMockBool;
+	// var list = $('script');
+	// var hasMockBool = false;
+	// for (var i = 0; i < list.length; i++) {
+	// 	var src = list[i].getAttribute('src');
+	// 	if (src == null) {
+	// 		continue;
+	// 	};
+	// 	if (src.indexOf('mock') >= 0) {
+	// 		hasMockBool = true;
+	// 		break;
+	// 	}
+	// };
+	// return hasMockBool;
+	var hMock = false;
+	hMock = window.location.toString().indexOf("t=1") == -1 ? false : true;
+	return hMock;
 }
 
 function HistoryController($scope){
