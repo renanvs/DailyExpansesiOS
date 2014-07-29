@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[FilterViewController tableView:cellForRowAtIndexPath:]:FilterViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "label">
+            </PersistentString>
+            <PersistentString
+               value = "desireKey">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[FilterViewController tableView:numberOfRowsInSection:]:FilterViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[DevCustomSetting createFakeItensModel]:DevCustomSetting.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "itemModel.category">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[FilterViewController viewDidLoad]:FilterViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "cat.identifier">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CDVHistoryPlugin ShowForm:]:CDVHistoryPlugin.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "command.arguments[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

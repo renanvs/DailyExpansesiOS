@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/form.css" rel="stylesheet">
+    <link href="css/ui-lightness/jquery-ui-1.10.4.css" rel="stylesheet">
+
+
+
+    
+    <script src="js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap-select.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.transit.min.js"></script>
+
+    <script src="js/jquery-ui-1.10.4.js"></script>
+    
+    
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+ 	<script src="js/cordova-exec-wrapper.js"></script>
+ 	
+    <script type="text/javascript">
+       	//var cordovaJs = document.createElement("script");
+        //cordovaJs.src = window.location.toString().indexOf("test=1") == -1 ? "cordova.js" : "cordova.mock.js";
+        //$("head").append(cordovaJs);
+
+        function onDeviceReady() {
+            document.addEventListener("pause", onPause, false);
+            document.addEventListener("resume", onResume, false);
+
+            angular.element(document).ready(function() {
+               angular.bootstrap(document);
+            });
+
+            finishedLoad();
+        }
+
+        function onPause() {
+            CordovaExec(function(){}, "FormPlugin", "OnPauseReceived");
+        }
+
+        function onResume() {
+            CordovaExec(function(){}, "FormPlugin", "OnResumeReceived");
+        }
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        function reset(){
+          CordovaExec(function() {
+            window.location.reload();
+          }, "FormPlugin", "RedownloadBanca");
+        }
+
+
+  </script>
+
+  </head>
+  <body ng-controller="CategoryListController">
+  	<div id="topBar" class="navbar navbar-default navbar-fixed-top topBarHeight">
+  		<div class="row parentCenter">
+  			<div class="col-xs-3 vCenter">
+  				<button type="button" id="topBarLeftButton" class="btn btn-primary">Voltar</button>
+			</div>
+			<div class="col-xs-6 vCenter" >
+  				<p class="text-center" id="topBarTitle">Daily Expenses</p>
+			</div>
+			<div class="col-xs-3 vCenter">
+  				<button type="button" class="btn btn-success" id="topBarRightButton" >Salvar</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="topBarHeight"></div>
+
+	<div class="container">
+    <form role="form">
+		<div class="form-group input-group-lg">
+			<label for="description">Descrição</label>
+			<input type="text" class="form-control" id="description" placeholder="Descrição do Item">
+		</div>
+	  
+		<div class="row rowWithRadioBorder">
+		  <div class="col-lg-5 col-xs-5 radioBorder">
+			<div class="radio">
+			  <label>
+				<input type="radio" name="type" value="Rendimento" checked>
+				Rendimento
+			  </label>
+			</div>
+		  </div>
+		  <div class="col-lg-2 col-xs-2">
+		  </div>
+
+		  <div class="col-lg-5 col-xs-5 radioBorder">
+			<div class="radio">
+			  <label>
+				<input type="radio" name="type" value="Despesa" >
+				Despesas
+			  </label>
+			</div>
+		  </div>
+		</div>
+		
+		<br/>
+		
+		<div id="typeSpent">
+			<div class="row">
+			  <div class="col-lg-4 col-xs-4 col-xs-offset-7 radioBorder">
+				<div class="radio">
+				  <label>
+					<input type="radio" name="typeSpent" value="Dinheiro" checked>
+					Dinheiro
+				  </label>
+				</div>
+			  </div>
+			</div>
+			<div class="row">
+			  <div class="col-lg-4 col-xs-4 col-xs-offset-7 radioBorder">
+				<div class="radio">
+				  <label>
+					<input type="radio" name="typeSpent" value="Debito" >
+					Débito
+				  </label>
+				</div>
+			  </div>
+			</div>
+			<div class="row">
+			  <div class="col-lg-4 col-xs-4 col-xs-offset-7 radioBorder">
+				<div class="radio">
+				  <label>
+					<input type="radio" name="typeSpent" value="Credito" >
+					Crédito
+				  </label>
+				</div>
+			  </div>
+			</div>
+		</div>
+		 
+		<div class="form-group input-group-lg">
+			<label for="description">Valor</label>
+			<div class="input-group">
+			  <span class="input-group-addon">R$</span>
+			  <input type="number" class="form-control" placeholder="99,99" id="price">
+			</div>
+		</div>
+		
+		<div id="categoryContainer">
+			<label class="text-center ">Categoria</label>
+			<div class="row parentCenter">
+				<div class="col-xs-4 vCenter">
+					<img ng-src={{selectedCategory.imagePath}} alt="..." class="img-rounded" style="width: 75px;">
+					<p style="padding-left: 5px;">{{selectedCategory.name}}</p>
+				</div>
+				<div class="col-xs-8 vCenter">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryModal" id="chooseCategoryButton" >Escolher</button>
+				</div>
+				
+			</div>
+		</div>
+	
+		<div id="parcelContainer">
+			<div class="form-group input-group-lg">
+				<label for="description">Parcela</label>
+				<div class="row">
+					<div class="col-xs-12">
+						<select id="parcelComboBox" class="selectpicker checkbox" style="height: 40px;">
+							<option title="Única">1x</option>
+							<option title="Únicae">2x</option>
+							<option>3x</option>
+							<option>4x</option>
+							<option>5x</option>
+							<option>6x</option>
+							<option>7x</option>
+							<option>8x</option>
+							<option>9x</option>
+							<option>10x</option>
+							<option>11x</option>
+							<option>12x</option>
+							<option>13x</option>
+							<option>14x</option>
+							<option>15x</option>
+							<option>16x</option>
+							<option>17x</option>
+							<option>18x</option>
+							<option>19x</option>
+							<option>20x</option>
+							<option>21x</option>
+							<option>22x</option>
+							<option>23x</option>
+							<option>24x</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group input-group-lg">
+			<label for="description">Data</label>
+			<div class="row">
+				<div class="col-xs-12">
+					<input type="date" class="form-control" id="description" style="height: 40px;">
+				</div>
+			</div>
+		</div>
+		
+		<label for="notes">Notas</label>
+		<textarea id="notes" class="form-control" rows="3"></textarea>
+	  
+	</form>
+
+	<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Categorias</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<table class="table">
+	      		<tr ng-repeat="category in categoryItens" ng-click="categorySelected(category)">
+	      			<td><img ng-src={{category.imagePath}} ></td>
+	      			<td style="vertical-align: middle;"><p>{{category.name}}</p></td>
+	      		</tr>
+	      	</table>
+	       
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModalButton">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	</div> 
+    
+    <script src="js/cordova.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/form.js"></script>
+    
+    
+  </body>
+</html>

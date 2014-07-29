@@ -1,0 +1,74 @@
+.radioBorder{
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 6px;
+	border-color: silver;
+}
+
+form{
+	margin: 15px;
+}
+
+.rowWithRadioBorder{
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.vCenter{
+	display:table-cell;
+    vertical-align:middle;
+    float:none;
+}
+
+.parentCenter{
+	display:table;
+	height: 100%;
+}
+
+.checkbox{
+	width: 100%;
+	height: 30px;
+	border-radius: 5px;
+	border-color: silver;
+	margin: 0;
+}
+
+#typeSpent{
+	display: none;
+}
+
+#typeSpent .row{
+	padding-top: 3px;
+}
+
+#categoryContainer{
+	display: none;
+}
+
+#parcelContainer{
+	display: none;
+}
+
+
+
+#topBar{
+	background-color: black;
+}
+
+.topBarHeight{
+	height: 50px;
+}
+
+#topBarTitle{
+	margin: 0;
+	color: white;
+}
+
+#topBarRightButton{
+	float:right;
+	margin-right: 8px;
+}
+
+#topBarLeftButton{
+	margin-left: 8px;
+}
