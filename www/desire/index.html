@@ -320,10 +320,21 @@
   
 
   <script type="text/javascript">
-    var cordovaJs = document.createElement("script");
-        cordovaJs.src = window.location.toString().indexOf("t=1") == -1 ? "cordova.js" : "cordova.mock.js";
-        $("head").append(cordovaJs);
+    // var cordovaJs = document.createElement("script");
+    //     cordovaJs.src = window.location.toString().indexOf("t=1") == -1 ? "cordova.js" : "cordova.mock.js";
+    //     $("head").append(cordovaJs);
+
+      // if(window.location.toString().indexOf("t=1") == -1)
+      // {
+      //     document.write('<script src="cordova.js"/>');
+      // }
+      // else
+      // {
+      //     document.write("<script src='cordova.mock.js'/>");
+      // }
+  
   </script>
+  <script src="js/cordova.js"></script>
   <script src="js/angular.min.js"></script>
   <script src="js/history.js"></script>
   </body>

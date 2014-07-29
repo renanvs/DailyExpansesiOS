@@ -52,4 +52,21 @@
     [[self.viewController findTopRootViewController] presentViewController:formViewController animated:YES completion:nil];
 }
 
+-(void)Filter:(CDVInvokedUrlCommand*)command{
+    CDVPluginResult *result = nil;
+    
+    if (command.arguments.count == 0 || [[command.arguments lastObject] isKindOfClass:[NSNull class]] ) {
+        NSLog(@"Error: Sem o id do item, impossivel mostra o formulario");
+        return;
+    }
+    
+    //fazer as regras
+//    {"date":"allDate","initDate":"","endDate":"","description":"","includeNotes":false,"moneyIn":false,"money":true,"debit":false,"credit":false,"categories":"selectedCategories","initValue":"","endValue":"","categoriesSelected":["0","1"]}
+    
+    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    
+}
+
 @end
