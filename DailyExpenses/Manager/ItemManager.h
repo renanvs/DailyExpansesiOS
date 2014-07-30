@@ -29,4 +29,6 @@
 
 -(ItemModel*)getLastItem;
 
+-(NSArray*)getItensWithFilterDictionary:(NSDictionary*)dic;
+
 @end

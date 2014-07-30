@@ -11,7 +11,7 @@
 
 @implementation DevCustomSetting
 
-@synthesize isNative, firstView, howMuchAppCreateOnInit, removeFakeItensOnInit;
+@synthesize isNative, firstView, howMuchAppCreateOnInit, removeFakeItensOnInit, isTester;
 
 SynthensizeSingleTon(DevCustomSetting);
 
@@ -24,6 +24,7 @@ SynthensizeSingleTon(DevCustomSetting);
         firstView = HistoryScreen;
         howMuchAppCreateOnInit = 25;
         [self createFakeItensModel];
+        isTester = YES;
     }
     
     return self;

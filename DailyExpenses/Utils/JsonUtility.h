@@ -16,4 +16,6 @@
 
 +(NSDictionary*)itemModelToItemDic:(ItemModel*)itemModel;
 
++(NSDictionary*)jsonStringToDictionary:(NSString*)jsonString;
+
 @end

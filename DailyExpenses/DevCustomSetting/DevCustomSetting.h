@@ -15,6 +15,7 @@ typedef enum {
 }FirstView;
 
 @interface DevCustomSetting : NSObject{
+    bool isTester;
     bool isNative;
     bool removeFakeItensOnInit;
     int howMuchAppCreateOnInit;
@@ -24,6 +25,7 @@ typedef enum {
 
 +(id)sharedInstance;
 
+@property (nonatomic, assign) bool isTester;
 @property (nonatomic, assign) bool isNative;
 @property (nonatomic, assign) bool removeFakeItensOnInit;
 @property (nonatomic, assign) FirstView firstView;

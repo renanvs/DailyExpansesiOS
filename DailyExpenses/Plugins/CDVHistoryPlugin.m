@@ -60,10 +60,18 @@
         return;
     }
     
-    //fazer as regras
-//    {"date":"allDate","initDate":"","endDate":"","description":"","includeNotes":false,"moneyIn":false,"money":true,"debit":false,"credit":false,"categories":"selectedCategories","initValue":"","endValue":"","categoriesSelected":["0","1"]}
+    NSString *jsonStr = [command.arguments lastObject];
+    NSDictionary *dic = [JsonUtility jsonStringToDictionary:jsonStr];
     
-    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    NSArray *itens = [[ItemManager sharedInstance] getItensWithFilterDictionary:dic];
+    
+    NSArray *itensF = [JsonUtility itemListToJsonArrayList:itens];
+    
+    //{"dateType":"2014-07-30","endDate":"2014-07-30","description":"rtfghfgh","includeNotes":true,
+    //"moneyIn":true,"money":false,"debit":true,"credit":false,"CategoryType":"selectedCategories",
+    //"initValue":"1","endValue":"2","categoriesSelected":["10","14","4"]}
+    
+    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:itensF];
     
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
     

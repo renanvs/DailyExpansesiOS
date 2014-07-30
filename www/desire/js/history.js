@@ -115,8 +115,14 @@ $('#filterButton').click(function(){
 	var key;
 	var value;
 
+	//{"dateType":"2014-07-30","endDate":"2014-07-30","description":"rtfghfgh",
+	//"includeNotes":true,"moneyIn":true,"money":false,"debit":true,"credit":false,
+	//"CategoryType":"selectedCategories","initValue":"1","endValue":"2",
+	//"categoriesSelected":["10","14","4"]}
+
 	//date checkbox
-	key = 	$('input[name = "date"]:checked')[0].getAttribute('name');
+	//key = 	$('input[name = "date"]:checked')[0].getAttribute('name');
+	key = "dateType";
 	value = $('input[name = "date"]:checked')[0].getAttribute('value');
 	addToFilterJson(key, value);
 
@@ -162,7 +168,8 @@ $('#filterButton').click(function(){
 
 	//Categories
 	if(spentCheckboxCheckedCount > 0){
-		key = $('input[name = "categories"]:checked')[0].getAttribute('name')
+		//key = $('input[name = "categories"]:checked')[0].getAttribute('name')
+		key = "CategoryType";
 		value = $('input[name = "categories"]:checked')[0].getAttribute('value')
 		addToFilterJson(key, value);
 	}
@@ -251,9 +258,63 @@ function finishedLoad(){
 		placement : 'bottom'
 	});
 	apply();
+
 	$('body').show();
 }
 
+function setupTester(){
+	//$("#topBarRightButton").click(function(){alert('click')})
+
+	mockFilter1();
+
+}
+
+function mockFilter1(){
+	$('input[value = "allDate"]')[0].setAttribute("checked")
+
+	$('input[name = "description"]')[0].value = "Fake"
+	
+	$('input[name = "includeNotes"]')[0].removeAttribute("checked")
+	
+	$('input[value = "moneyIn"]')[0].setAttribute("checked")
+
+	$('input[value = "money"]')[0].setAttribute("checked")
+	$('input[value = "debit"]')[0].setAttribute("checked")
+	$('input[value = "credit"]')[0].setAttribute("checked")
+	
+	$('input[value = "allCategories"]')[0].setAttribute("checked")
+
+	$('input[name = "initValue"]')[0].value = "11.11"
+	$('input[name = "endValue"]')[0].value = "22.22"
+}
+
+function mockFilter0(){
+	$('input[value = "allDate"]')[0].setAttribute("checked")
+
+	$('input[name = "initDate"]')[0].value = "2013-11-12"
+	$('input[name = "endDate"]')[0].value = "2013-11-12"
+
+	$('input[name = "description"]')[0].value = "desfgsdgdf"
+	
+	$('input[name = "includeNotes"]')[0].removeAttribute("checked")
+	
+	$('input[value = "moneyIn"]')[0].removeAttribute("checked")
+
+	$('input[value = "money"]')[0].setAttribute("checked")
+	$('input[value = "debit"]')[0].setAttribute("checked")
+	$('input[value = "credit"]')[0].setAttribute("checked")
+	
+	$('input[value = "selectedCategories"]')[0].setAttribute("checked")
+
+	$('input[name = "initValue"]')[0].value = "11.11"
+	$('input[name = "endValue"]')[0].value = "22.22"
+
+	var tempCat = getHistoryController().selectedCategories;
+	var itemTemp = getHistoryController().categoryItens[1];
+	tempCat.push(itemTemp);
+	var itemTemp = getHistoryController().categoryItens[2];
+	tempCat.push(itemTemp);
+}
 
 function apply(){
 
@@ -282,7 +343,19 @@ function hasMock(){
 	// return hMock;
 }
 
+var isTester = false;
+
 function HistoryController($scope){
+	CordovaExec(function(value){
+		//alert(value);
+		isTester = value;
+
+		if (isTester) {
+			setupTester()
+		};
+
+	}, "UtilsPlugin", "IsTester");
+
 	CordovaExec(function(itensListStr){
 		//alert(itensListStr[0].label);
 		$scope.itensList = itensListStr;
