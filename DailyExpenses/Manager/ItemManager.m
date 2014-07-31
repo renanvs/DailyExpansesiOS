@@ -66,6 +66,34 @@ SynthensizeSingleTon(ItemManager)
     return model;
 }
 
+-(ItemModel*)CreateOrUpdateItemWithDictionary:(NSDictionary*)dic{
+    ItemModel *model = nil;
+    NSString *itemModelIdentifier = [dic objectForKey:@"identifier"];
+    if (![NSString isStringEmpty:itemModelIdentifier]) {
+        model = [self getItemById:itemModelIdentifier];
+        model.dateUpdated = [[DateUtility sharedInstance] getCurrentDateWithFormat:@"yyyy-MM-dd hh:mm:ss"];
+    }else{
+        model.dateCreated = [[DateUtility sharedInstance] getCurrentDateWithFormat:@"yyyy-MM-dd hh:mm:ss"];
+    }
+    
+    model.label = [dic objectForKey:@"description"];
+    model.parcel = [dic objectForKey:@"parcel"];
+    model.value = [dic objectForKey:@"price"];
+    model.dateSpent = [dic objectForKey:@"dateSpent"];
+    model.notes = [dic objectForKey:@"notes"];
+    model.isMoneyOut = [dic objectForKey:@"spent"];
+    model.isMoneyIn = [NSNumber numberWithBool:![model.isMoneyOut boolValue]];
+    model.isCreditCard = [dic objectForKey:@"creditCard"];
+    model.isDebitCard = [dic objectForKey:@"debit"];
+    model.isMoney = [dic objectForKey:@"money"];
+
+    model.category = [[CategoryManager sharedInstance] getCategoryById:[dic objectForKey:@"categoryId"]];
+    
+    [[CoreDataService sharedInstance] saveContext];
+
+    return model;
+}
+
 -(ItemModel *)UpdateItemWithJson:(id)json{
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:json options:NSJSONReadingMutableLeaves error:nil];
     
@@ -112,44 +140,14 @@ SynthensizeSingleTon(ItemManager)
     
     NSString *query = [self createFilterQueryWithDictionary:dic];
     
-//    NSString * dateCreated;
-//    NSString * dateSpent;
-//    NSString * dateUpdated;
-//    NSNumber * isCreditCard;
-//    NSNumber * isDebitCard;
-//    NSNumber * isMoneyIn;
-//    NSNumber * isMoneyOut;
-//    NSString * label;
-//    NSString * notes;
-//    NSString * parcel;
-//    NSString * value;
-//    NSNumber * isMoney;
-//    NSString * identifier;
-//    CardModel *card;
-//    CategoryModel *category;
-    
-    //dateType - (allDate || specificDate)
-    //initDate - (2014-07-30)
-    //endDate - (2014-07-30)
-    //description - (sample description)
-    //includeNotes -  true/false
-    //moneyIn - true/false
-    //money - true/false
-    //debit - true/false
-    //credit - true/false
-    //CategoryType - selectedCategories/allCategories
-    //initValue - 1
-    //endValue - 2
-    //categoriesSelected - (array)1, 2, 3
-    
     NSArray *list = [[CoreDataService sharedInstance] getContentWithEntity:EntityItemModel AndQuery:query];
     
     return list;
 }
 
+//Cria query baseado nos valores do dicionario
 -(NSString*)createFilterQueryWithDictionary:(NSDictionary*)dic{
     NSMutableString *query = [[NSMutableString alloc] initWithString:@""];
-    
     
     NSString *dateType = [dic objectForKey:@"dateType"];
     if ([dateType isEqualToString:@"specificDate"]) {
@@ -170,26 +168,49 @@ SynthensizeSingleTon(ItemManager)
     }
     
     BOOL moneyIn = [[dic objectForKey:@"moneyIn"] boolValue];
-    [query appendFormat:@"(isMoneyIn == %@ || ",[NSNumber numberWithBool:moneyIn]];
+    if (moneyIn)
+        [query appendFormat:@"(isMoneyIn == %@ || ",[NSNumber numberWithBool:moneyIn]];
 
     BOOL money = [[dic objectForKey:@"money"] boolValue];
     BOOL debit = [[dic objectForKey:@"debit"] boolValue];
     BOOL credit = [[dic objectForKey:@"credit"] boolValue];
     
-    [query appendFormat:@"isMoney == %@ || ",[NSNumber numberWithBool:money]];
-    [query appendFormat:@"isDebitCard == %@ || ",[NSNumber numberWithBool:debit]];
-    [query appendFormat:@"isCreditCard == %@) && ",[NSNumber numberWithBool:credit]];
-    
+    if (!money && !debit && !credit) {
+        query = [NSMutableString stringWithString:[query substringToIndex:(query.length -4)]];
+        if (moneyIn)
+            [query appendString:@")"];
+        
+        
+        [query appendString:@" && "];
+//        [query appendFormat:@"isMoney == %@ || ",[NSNumber numberWithBool:YES]];
+//        [query appendFormat:@"isDebitCard == %@ || ",[NSNumber numberWithBool:YES]];
+//        [query appendFormat:@"isCreditCard == %@) && ",[NSNumber numberWithBool:YES]];
+    }else{
+        if (!moneyIn) {
+            [query appendString:@"("];
+        }
+        
+        if (money)
+            [query appendFormat:@"isMoney == %@ || ",[NSNumber numberWithBool:money]];
+        if (debit)
+            [query appendFormat:@"isDebitCard == %@ || ",[NSNumber numberWithBool:debit]];
+        if (credit)
+            [query appendFormat:@"isCreditCard == %@ || ",[NSNumber numberWithBool:credit]];
+        
+        query = [NSMutableString stringWithString:[query substringToIndex:(query.length -4)]];
+        [query appendString:@") && "];
+    }
     
     NSString *categoryType = [dic objectForKey:@"CategoryType"];
     if ([categoryType isEqualToString:@"selectedCategories"]) {
-        if ([dateType isEqualToString:@"specificDate"]) {
-            NSArray *categoriesSelected = [dic objectForKey:@"categoriesSelected"];
-            if (!categoriesSelected && categoriesSelected.count > 0) {
-                for (NSNumber *num in categoriesSelected) {
-                    [query appendFormat:@"category.identifier == %@ && ",num];
-                }
+        NSArray *categoriesSelected = [dic objectForKey:@"categoriesSelected"];
+        if (categoriesSelected && categoriesSelected.count > 0) {
+            [query appendFormat:@"("];
+            for (NSString *num in categoriesSelected) {
+                [query appendFormat:@"category.identifier == '%@' || ",num];
             }
+            query = [NSMutableString stringWithString:[query substringToIndex:(query.length -4)]];
+            [query appendFormat:@") && "];
         }
     }
     

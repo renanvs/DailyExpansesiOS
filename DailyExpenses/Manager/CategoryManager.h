@@ -24,4 +24,6 @@
 
 -(CategoryModel*)getDefaultCategory;
 
+-(CategoryModel*)getLastCategoryModelWithQuery:(NSString*)query;
+
 @end

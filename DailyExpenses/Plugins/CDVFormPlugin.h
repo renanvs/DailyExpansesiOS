@@ -11,4 +11,6 @@
 
 @interface CDVFormPlugin : CDVPlugin
 
+-(void)Populate:(CDVInvokedUrlCommand*)command;
+
 @end

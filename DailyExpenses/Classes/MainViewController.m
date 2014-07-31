@@ -57,6 +57,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[DevCustomSetting sharedInstance] setCurrentWebView:self.webView];
     // Do any additional setup after loading the view from its nib.
 }
 

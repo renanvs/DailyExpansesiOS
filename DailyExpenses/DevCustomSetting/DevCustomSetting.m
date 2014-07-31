@@ -8,10 +8,11 @@
 
 #import "DevCustomSetting.h"
 #import <math.h>
+#import "FakeModels.h"
 
 @implementation DevCustomSetting
 
-@synthesize isNative, firstView, howMuchAppCreateOnInit, removeFakeItensOnInit, isTester;
+@synthesize isNative, firstView, howMuchAppCreateOnInit, removeFakeItensOnInit, isTester, currentWebView;
 
 SynthensizeSingleTon(DevCustomSetting);
 
@@ -23,11 +24,24 @@ SynthensizeSingleTon(DevCustomSetting);
         removeFakeItensOnInit = YES;
         firstView = HistoryScreen;
         howMuchAppCreateOnInit = 25;
-        [self createFakeItensModel];
+        [self createVariatyItensModel];
+        //[self createFakeItensModel];
         isTester = YES;
     }
     
     return self;
+}
+
+-(void)createVariatyItensModel{
+    if (removeFakeItensOnInit) {
+        NSManagedObjectContext *ctx = [[CoreDataService sharedInstance] context];
+        NSArray *itens = [[CoreDataService sharedInstance] getContentWithEntity:EntityItemModel];
+        for (ItemModel *item in itens) {
+            [ctx deleteObject:item];
+        }
+    }
+    
+    [FakeModels createVariatyOfItens];
 }
 
 -(void)createFakeItensModel{
@@ -62,6 +76,10 @@ SynthensizeSingleTon(DevCustomSetting);
         
         NSLog(@"");
     }
+}
+
+-(void)executeJSCommand:(NSString*)command{
+    [currentWebView stringByEvaluatingJavaScriptFromString:command];
 }
 
 @end

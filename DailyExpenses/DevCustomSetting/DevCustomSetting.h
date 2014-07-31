@@ -20,7 +20,7 @@ typedef enum {
     bool removeFakeItensOnInit;
     int howMuchAppCreateOnInit;
     FirstView firstView;
-
+    UIWebView *currentWebView;
 }
 
 +(id)sharedInstance;
@@ -29,6 +29,9 @@ typedef enum {
 @property (nonatomic, assign) bool isNative;
 @property (nonatomic, assign) bool removeFakeItensOnInit;
 @property (nonatomic, assign) FirstView firstView;
+@property (nonatomic, assign) UIWebView *currentWebView;
 @property (nonatomic, assign) int howMuchAppCreateOnInit;
+
+-(void)executeJSCommand:(NSString*)command;
 
 @end

@@ -12,7 +12,7 @@ var SPENTTYPE = {
 
 var currentType = TYPE.RENDIMENTOS;
 var currentSpentType = SPENTTYPE.UNDEFINED;
-
+var currentItem;
 
 
 ////
@@ -34,8 +34,8 @@ function startLoad(){
 function finishedLoad(){
 	CordovaExec(function(item){
 		populateFormWithItem(item)
-        //setTimeout(function(){populateFormWithItem(item);
-		//},15000)
+  //       setTimeout(function(){populateFormWithItem(item);
+		// },15000)
     }, "FormPlugin", "Populate");
     
     $('#topBarLeftButton').click(function(e){
@@ -94,28 +94,58 @@ function getFormDatasToJson(){
 	itemModel.price = $("#price")[0].value;
 	itemModel.categoryId = getFormController().selectedCategory.identifier;
 	itemModel.parcel = $("#parcelComboBox")[0].value.replace('x', '');
+	// dataA = $("input[type= 'date']")[0].value.split("-");
+	// dateB = dataA[0] + "-" + dateA[2] + "-" dateA[1]
 	itemModel.dateSpent = $("input[type= 'date']")[0].value;
 	itemModel.notes = $("#notes")[0].value;
-	itemModel.type = currentType.name;
-	itemModel.spentType = currentSpentType.name;
+	
+	if(currentType == TYPE.RENDIMENTOS){
+		itemModel.spent = 0;
+		itemModel.money = 0;
+		itemModel.creditCard = 0;
+		itemModel.debit = 0;
+	}else{
+		if (currentSpentType == SPENTTYPE.DINHEIRO) {
+			itemModel.money = 1;
+			itemModel.creditCard = 0;
+			itemModel.debit = 0;
+		}else if (currentSpentType == SPENTTYPE.CREDITO) {
+			itemModel.creditCard = 1;
+			itemModel.money = 0;
+			itemModel.debit = 0;
+		}else if (currentSpentType == SPENTTYPE.DEBITO) {
+			itemModel.debit = 1;
+			itemModel.creditCard = 0;
+			itemModel.money = 0;
+		}
+		itemModel.spent = 1;
+	}
+	itemModel.identifier = currentItem.identifier;
+	// currentType.name;
+	// currentSpentType.name;
 	return itemModel;
 }
 
 function sendToCore(){
 	var model = getFormDatasToJson();
 	var jsonStr = JSON.stringify(model);
-	CordovaExec(function(msg){
-            	alert(msg);
+	CordovaExec(function(itemModel){
+            	//alert('should save');
+            	populateFormWithItem(itemModel)
             }, "FormPlugin", "SendItem",[jsonStr]);
 }
 
 function populateFormWithItem(item){
+	//alert(item.dateSpent);
+	currentItem = item;
 	$("#description")[0].value = item.label;
 	$("#price")[0].value = item.value.replace(',','.');
 	//$("#categoryId")[0].textContent = item.categoryId;
 	getFormController().setCurrentCategoryById(item.category.identifier);
 	$("#parcelComboBox")[0].selectedIndex = item.parcel -1;
-	$("input[type= 'date']")[0].value = item.dateSpent;
+	var aDate = currentItem.dateSpent.split('-');
+	var bDate = aDate[0] + '-' + aDate[2] + '-' + aDate[1];
+	$("input[type= 'date']")[0].value = bDate;
 	$("#notes")[0].value = item.notes;
     
 	if (item.spent == 0) {

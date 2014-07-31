@@ -22,12 +22,13 @@
 }
 
 -(void)IsTester:(CDVInvokedUrlCommand*)command{
-    CDVPluginResult *result = nil;
-    
-    result = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsBool:[[DevCustomSetting sharedInstance] isTester]];
-    
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-
+    [self.commandDelegate runInBackground:^{
+        CDVPluginResult *result = nil;
+        
+        result = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsBool:[[DevCustomSetting sharedInstance] isTester]];
+        
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }];
 }
 
 @end

@@ -265,7 +265,7 @@ function finishedLoad(){
 function setupTester(){
 	//$("#topBarRightButton").click(function(){alert('click')})
 
-	mockFilter1();
+	//mockFilter1();
 
 }
 

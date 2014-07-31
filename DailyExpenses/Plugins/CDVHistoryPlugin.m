@@ -12,26 +12,31 @@
 @implementation CDVHistoryPlugin
 
 -(void)GetAllItens:(CDVInvokedUrlCommand*)command{
-    CDVPluginResult *result = nil;
     
-    NSArray *allItens = [[ItemManager sharedInstance] getAllItens];
-    NSArray *allItensJson = [JsonUtility itemListToJsonArrayList:allItens];
-    
-    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:allItensJson];
-    
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-    
+    //[self.commandDelegate runInBackground:^{
+        CDVPluginResult *result = nil;
+        NSArray *allItens = [[ItemManager sharedInstance] getAllItens];
+        NSArray *allItensJson = [JsonUtility itemListToJsonArrayList:allItens];
+        
+        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:allItensJson];
+        
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    //}];
 }
 
 -(void)GetAllCategories:(CDVInvokedUrlCommand*)command{
-    CDVPluginResult *result = nil;
-    
-    NSArray *allCategories = [[CategoryManager sharedInstance] getAllCategories];
-    NSArray *allCategoriesJson = [JsonUtility categoryListToJsonArrayList:allCategories];
-    
-    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:allCategoriesJson];
-    
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    //[self.commandDelegate runInBackground:^{
+        
+        CDVPluginResult *result = nil;
+        
+        NSArray *allCategories = [[CategoryManager sharedInstance] getAllCategories];
+        NSArray *allCategoriesJson = [JsonUtility categoryListToJsonArrayList:allCategories];
+        
+        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:allCategoriesJson];
+        
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        
+   // }];
 }
 
 -(void)ShowForm:(CDVInvokedUrlCommand*)command{
@@ -48,6 +53,8 @@
     
     FormCDVViewController *formViewController = [[FormCDVViewController alloc] init];
     [[ItemManager sharedInstance] setItemIdentifier:[command.arguments lastObject]];
+    
+    //id obj = [self.viewController findTopRootViewController];
     
     [[self.viewController findTopRootViewController] presentViewController:formViewController animated:YES completion:nil];
 }
@@ -66,10 +73,6 @@
     NSArray *itens = [[ItemManager sharedInstance] getItensWithFilterDictionary:dic];
     
     NSArray *itensF = [JsonUtility itemListToJsonArrayList:itens];
-    
-    //{"dateType":"2014-07-30","endDate":"2014-07-30","description":"rtfghfgh","includeNotes":true,
-    //"moneyIn":true,"money":false,"debit":true,"credit":false,"CategoryType":"selectedCategories",
-    //"initValue":"1","endValue":"2","categoriesSelected":["10","14","4"]}
     
     result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:itensF];
     

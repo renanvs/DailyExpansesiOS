@@ -78,11 +78,22 @@ SynthensizeSingleTon(CategoryManager)
     NSString *query = [NSString stringWithFormat:@"identifier == %@", identifier];
     
     if ([NSString isStringEmpty:identifier] || [identifier isEqualToString:@"default"]) {
-        query = [NSString stringWithFormat:@"name == %@", @"default"];
+        query = [NSString stringWithFormat:@"name == '%@'", @"default"];
     }
     
     NSArray *list =  [[CoreDataService sharedInstance] getContentWithEntity:EntityCategoryModel AndQuery:query];
     if (list.count > 0) {
+        return [list lastObject];
+    }
+    
+    return nil;
+}
+
+-(CategoryModel*)getLastCategoryModelWithQuery:(NSString*)query{
+    
+    NSArray *list = [[CoreDataService sharedInstance] getContentWithEntity:EntityCategoryModel AndQuery:query];
+    
+    if (list > 0) {
         return [list lastObject];
     }
     

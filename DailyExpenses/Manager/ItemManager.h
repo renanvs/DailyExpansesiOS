@@ -23,6 +23,8 @@
 
 -(ItemModel*)CreateItemWithJson:(id)json;
 
+-(ItemModel*)CreateOrUpdateItemWithDictionary:(NSDictionary*)dic;
+
 -(NSArray*)getAllItens;
 
 @property(nonatomic, assign) NSString *itemIdentifier;
