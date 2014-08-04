@@ -32,6 +32,10 @@
         <param name="ios-package" value="UtilsCDVPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="MainPlugin">
+        <param name="ios-package" value="CDVMainPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <name>DailyExpenses</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -39,6 +43,6 @@
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
-    <content src="desire/index.html" />
+    <content src="desire/index_history.html" />
     <access origin="*" />
 </widget>

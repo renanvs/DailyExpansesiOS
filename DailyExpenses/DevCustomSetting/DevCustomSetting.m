@@ -22,7 +22,7 @@ SynthensizeSingleTon(DevCustomSetting);
     if (self) {
         isNative = NO;
         removeFakeItensOnInit = YES;
-        firstView = HistoryScreen;
+        firstView = MainScreen;
         howMuchAppCreateOnInit = 25;
         [self createVariatyItensModel];
         //[self createFakeItensModel];

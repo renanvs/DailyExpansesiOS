@@ -1,0 +1,66 @@
+
+.vCenter{
+	display:table-cell;
+    vertical-align:middle;
+    float:none;
+}
+
+.parentCenter{
+	display:table;
+	height: 100%;
+}
+
+#topBar{
+	background-color: black;
+}
+
+.topBarHeight{
+	height: 50px;
+}
+
+#topBarTitle{
+	margin: 0;
+	color: white;
+}
+
+#topBarRightButton{
+	float:right;
+	margin-right: 8px;
+}
+
+#topBarLeftButton{
+	margin-left: 8px;
+}
+
+.container{
+	padding: 0;
+	width: 100%;
+}
+
+	/*.center-block();*/
+// Mixin
+.center-block() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+html, body, .container{
+	height: 100%;
+}
+
+#buttonInclude{
+	width: 100px;
+}
+
+#buttonList{
+	width: 100px;
+}
+
+#listDiv{
+	
+}
+
+#includeDiv{
+	
+}

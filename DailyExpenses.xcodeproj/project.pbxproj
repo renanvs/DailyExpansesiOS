@@ -11,6 +11,9 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1E133811195E5B100047C54F /* FormCDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E133810195E5B100047C54F /* FormCDVViewController.m */; };
 		1E133814195E5E9A0047C54F /* CDVFormPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E133813195E5E9A0047C54F /* CDVFormPlugin.m */; };
+		1E1C1775198C6ACF00E1C9CC /* HistoryCDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C1774198C6ACF00E1C9CC /* HistoryCDVViewController.m */; };
+		1E1C1778198C6B3900E1C9CC /* MainCDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C1777198C6B3900E1C9CC /* MainCDVViewController.m */; };
+		1E1C177B198E7FD900E1C9CC /* CDVMainPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E1C177A198E7FD900E1C9CC /* CDVMainPlugin.m */; };
 		1E211F80192EC67C007EC707 /* CoreDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E211F7C192EC67C007EC707 /* CoreDataService.m */; };
 		1E211F81192EC67C007EC707 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E211F7F192EC67C007EC707 /* Utils.m */; };
 		1E211F85192EC723007EC707 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E211F84192EC723007EC707 /* CoreData.framework */; };
@@ -154,6 +157,12 @@
 		1E133810195E5B100047C54F /* FormCDVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FormCDVViewController.m; path = DailyExpenses/Classes/FormCDVViewController.m; sourceTree = "<group>"; };
 		1E133812195E5E9A0047C54F /* CDVFormPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVFormPlugin.h; sourceTree = "<group>"; };
 		1E133813195E5E9A0047C54F /* CDVFormPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVFormPlugin.m; sourceTree = "<group>"; };
+		1E1C1773198C6ACF00E1C9CC /* HistoryCDVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryCDVViewController.h; path = DailyExpenses/Classes/HistoryCDVViewController.h; sourceTree = "<group>"; };
+		1E1C1774198C6ACF00E1C9CC /* HistoryCDVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryCDVViewController.m; path = DailyExpenses/Classes/HistoryCDVViewController.m; sourceTree = "<group>"; };
+		1E1C1776198C6B3900E1C9CC /* MainCDVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainCDVViewController.h; path = DailyExpenses/Classes/MainCDVViewController.h; sourceTree = "<group>"; };
+		1E1C1777198C6B3900E1C9CC /* MainCDVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainCDVViewController.m; path = DailyExpenses/Classes/MainCDVViewController.m; sourceTree = "<group>"; };
+		1E1C1779198E7FD900E1C9CC /* CDVMainPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVMainPlugin.h; sourceTree = "<group>"; };
+		1E1C177A198E7FD900E1C9CC /* CDVMainPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVMainPlugin.m; sourceTree = "<group>"; };
 		1E211F7B192EC67C007EC707 /* CoreDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataService.h; sourceTree = "<group>"; };
 		1E211F7C192EC67C007EC707 /* CoreDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataService.m; sourceTree = "<group>"; };
 		1E211F7E192EC67C007EC707 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
@@ -388,6 +397,10 @@
 				302D95EF14D2391D003F00A1 /* MainViewController.m */,
 				302D95F014D2391D003F00A1 /* MainViewController.xib */,
 				1E13380F195E5B100047C54F /* FormCDVViewController.h */,
+				1E1C1773198C6ACF00E1C9CC /* HistoryCDVViewController.h */,
+				1E1C1774198C6ACF00E1C9CC /* HistoryCDVViewController.m */,
+				1E1C1776198C6B3900E1C9CC /* MainCDVViewController.h */,
+				1E1C1777198C6B3900E1C9CC /* MainCDVViewController.m */,
 				1E133810195E5B100047C54F /* FormCDVViewController.m */,
 			);
 			name = MainViewController;
@@ -671,6 +684,8 @@
 			isa = PBXGroup;
 			children = (
 				1E211F92192EC8EB007EC707 /* UtilsCDVPlugin.h */,
+				1E1C1779198E7FD900E1C9CC /* CDVMainPlugin.h */,
+				1E1C177A198E7FD900E1C9CC /* CDVMainPlugin.m */,
 				1E211F93192EC8EB007EC707 /* UtilsCDVPlugin.m */,
 				1EC4C3AD1953C9DF008583BB /* CDVHistoryPlugin.h */,
 				1EC4C3AE1953C9DF008583BB /* CDVHistoryPlugin.m */,
@@ -928,6 +943,8 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1EB6E2BB193BDF0E009D3378 /* CategoryModel.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
+				1E1C177B198E7FD900E1C9CC /* CDVMainPlugin.m in Sources */,
+				1E1C1775198C6ACF00E1C9CC /* HistoryCDVViewController.m in Sources */,
 				1EC4C3AF1953C9DF008583BB /* CDVHistoryPlugin.m in Sources */,
 				1E211F94192EC8EB007EC707 /* UtilsCDVPlugin.m in Sources */,
 				1E211FB019326F37007EC707 /* AddItemViewController.m in Sources */,
@@ -939,6 +956,7 @@
 				1E133811195E5B100047C54F /* FormCDVViewController.m in Sources */,
 				1EB6E2BE193BDF0F009D3378 /* CardModel.m in Sources */,
 				1E211FF419329E2D007EC707 /* UIHelpers.m in Sources */,
+				1E1C1778198C6B3900E1C9CC /* MainCDVViewController.m in Sources */,
 				1E211F81192EC67C007EC707 /* Utils.m in Sources */,
 				1EB6E2C5193EB72E009D3378 /* ItemCell.m in Sources */,
 				1E133814195E5E9A0047C54F /* CDVFormPlugin.m in Sources */,

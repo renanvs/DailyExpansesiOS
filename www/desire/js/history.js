@@ -37,6 +37,15 @@ $(document).ready(function(){
 		tr.setAttribute('class' ,'success trItem')
 	});
 
+	$('#filterActiveDiv').click(function(){
+		CordovaExec(function(itensListStr){
+			//alert(itensListStr[0].label);
+			getHistoryController().itensList = itensListStr;
+			apply();
+			hideActiveFilterButton();
+		}, "HistoryPlugin", "GetAllItens");
+	});
+
 	///////////////// Filter UI///////////////////////////////////
 	
 	$('input[name="moneyInOut"]').on('change', function(e){
@@ -200,6 +209,7 @@ $('#filterButton').click(function(){
 	}, "HistoryPlugin", "Filter",[JSON.stringify(filterJson)]);
 
 	$('#backButton').click();
+	showActiveFilterButton();
 })
 
 function addToFilterJson (key, value){
@@ -257,6 +267,7 @@ function finishedLoad(){
 		content : $('.popover').html(),
 		placement : 'bottom'
 	});
+	hideActiveFilterButton()
 	apply();
 
 	$('body').show();
@@ -443,5 +454,11 @@ function sortResults(list, prop, asc) {
 }
 ////////////////////////////////////////////
 
+function hideActiveFilterButton(){
+	$('#filterActiveDiv').hide();
+}
 
+function showActiveFilterButton(){
+	$('#filterActiveDiv').show();
+}
 

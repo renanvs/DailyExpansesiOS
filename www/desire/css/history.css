@@ -24,8 +24,8 @@
 }
 
 #topBarRightButton{
-	float:right;
-	margin-right: 8px;
+	/*float:right;*/
+	/*margin-right: 8px;*/
 }
 
 #topBarLeftButton{
@@ -107,4 +107,28 @@
 
 .row{
 	margin: 0;
+}
+
+#filterActiveDiv{
+	position: absolute;
+	top: 43px;
+	width: 150px;
+	margin-left: 50%;
+	left: -75px;
+	/*.center-block();*/
+}
+
+#filterActiveButton{
+	width: 100%;
+}
+
+// Mixin
+.center-block() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.topBarButtonDiv{
+	text-align: center;
 }

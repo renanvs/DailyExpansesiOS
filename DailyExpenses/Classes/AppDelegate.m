@@ -32,6 +32,10 @@
 #import "HistoryViewController.h"
 #import <Cordova/CDVPlugin.h>
 
+#import "MainCDVViewController.h"
+#import "FormCDVViewController.h"
+#import "HistoryCDVViewController.h"
+
 @implementation AppDelegate
 
 @synthesize window, viewController;
@@ -75,11 +79,11 @@
     self.window.autoresizesSubviews = YES;
 
     
-#if __has_feature(objc_arc)
-        self.viewController = [[MainViewController alloc] init];
-#else
-        self.viewController = [[[MainViewController alloc] init] autorelease];
-#endif
+//#if __has_feature(objc_arc)
+//        self.viewController = [[MainViewController alloc] init];
+//#else
+//        self.viewController = [[[MainViewController alloc] init] autorelease];
+//#endif
 
     // Set your app's start page by setting the <content src='foo.html' /> tag in config.xml.
     // If necessary, uncomment the line below to override it.
@@ -90,9 +94,8 @@
     
     DevCustomSetting *dev = [DevCustomSetting sharedInstance];
     
+    UIViewController *vc = nil;
     if (dev.isNative) {
-        UIViewController *vc = nil;
-        
         if (dev.firstView == MainScreen) {
             vc = [[[FirstViewController alloc] init] autorelease];
         }else if (dev.firstView == AddScreen){
@@ -103,7 +106,16 @@
         
         self.window.rootViewController = vc;
     }else{
-        self.window.rootViewController = self.viewController;
+        
+        if (dev.firstView == MainScreen) {
+            vc = [[[MainCDVViewController alloc] init] autorelease];
+        }else if (dev.firstView == AddScreen){
+            vc = [[[FormCDVViewController alloc] init] autorelease];
+        }else if (dev.firstView == HistoryScreen){
+            vc = [[[HistoryCDVViewController alloc] init] autorelease];
+        }
+        
+        self.window.rootViewController = vc;
     }
     
     [self.window makeKeyAndVisible];

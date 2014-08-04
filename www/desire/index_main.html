@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"> 
+
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/ui-lightness/jquery-ui-1.10.4.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap-select.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.js"></script>
+    
+ 	<script src="js/cordova-exec-wrapper.js"></script>
+    <script type="text/javascript">
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        function onDeviceReady() {
+            finishedLoad();
+        }
+  </script>
+
+  </head>
+  
+  <body >
+
+    <div id="topBar" class="navbar navbar-default navbar-fixed-top topBarHeight">
+      <div class="row parentCenter">
+        <div class="col-xs-3 vCenter">
+  				<!-- <button type="button" id="topBarLeftButton" class="btn btn-primary">Ordenar</button> -->
+        </div>
+        <div class="col-xs-6 vCenter" >
+        		<p class="text-center" id="topBarTitle">Daily Expenses</p>
+        </div>
+        <div class="col-xs-3 vCenter">
+        		<!-- <button type="button" class="btn btn-primary" id="topBarRightButton" data-toggle="modal" data-target=".bs-example-modal-lg">Filtro</button> -->
+        </div>
+      </div>
+    </div>
+
+	<div class="topBarHeight"></div>
+
+	<div class="container">
+   		<div class="row parentCenter"> 
+        <div class="col-xs-6 vCenter" id="includeDiv">
+          <button type="button" class="btn btn-primary btn-lg center-block" id="buttonInclude">Incluir</button>
+        </div>
+        <div class="col-xs-6 vCenter" id="listDiv">
+          <button type="button" class="btn btn-primary btn-lg center-block" id="buttonList">Lista</button>
+        </div>
+      </div>
+	</div> 
+
+  <script src="js/cordova.js"></script>
+  <script src="js/main.js"></script>
+  </body>
+</html>
