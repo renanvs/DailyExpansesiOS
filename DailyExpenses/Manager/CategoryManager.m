@@ -62,10 +62,6 @@ SynthensizeSingleTon(CategoryManager)
             
             NSString *identifier = [NSString stringWithFormat:@"%lu",(unsigned long)[allKeys indexOfObject:key]];
             
-//            if ([key isEqualToString:@"default"]) {
-//                identifier = @"default";
-//            }
-            
             categoryModel.identifier = identifier;
         }
         

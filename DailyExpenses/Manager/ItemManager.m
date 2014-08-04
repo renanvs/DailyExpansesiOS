@@ -182,9 +182,6 @@ SynthensizeSingleTon(ItemManager)
         
         
         [query appendString:@" && "];
-//        [query appendFormat:@"isMoney == %@ || ",[NSNumber numberWithBool:YES]];
-//        [query appendFormat:@"isDebitCard == %@ || ",[NSNumber numberWithBool:YES]];
-//        [query appendFormat:@"isCreditCard == %@) && ",[NSNumber numberWithBool:YES]];
     }else{
         if (!moneyIn) {
             [query appendString:@"("];

@@ -11,7 +11,6 @@
 @implementation FakeModels
 
 +(void)createVariatyOfItens{
-    //ItemManager *im = [ItemManager sharedInstance];
     CoreDataService *cs = [CoreDataService sharedInstance];
     ItemModel *item0 = (ItemModel*)[cs createManagedObjectWithName:EntityItemModel];
     item0.dateCreated = @"2010-03-18";

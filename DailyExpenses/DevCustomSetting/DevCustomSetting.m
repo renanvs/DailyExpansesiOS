@@ -12,7 +12,7 @@
 
 @implementation DevCustomSetting
 
-@synthesize isNative, firstView, howMuchAppCreateOnInit, removeFakeItensOnInit, isTester, currentWebView;
+@synthesize firstView, howMuchAppCreateOnInit, removeFakeItensOnInit, isTester, currentWebView;
 
 SynthensizeSingleTon(DevCustomSetting);
 
@@ -20,7 +20,6 @@ SynthensizeSingleTon(DevCustomSetting);
     self = [super init];
     
     if (self) {
-        isNative = NO;
         removeFakeItensOnInit = YES;
         firstView = MainScreen;
         howMuchAppCreateOnInit = 25;

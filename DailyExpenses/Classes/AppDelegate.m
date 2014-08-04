@@ -26,12 +26,7 @@
 //
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
-#import "FirstViewController.h"
-#import "AddItemViewController.h"
-#import "HistoryViewController.h"
 #import <Cordova/CDVPlugin.h>
-
 #import "MainCDVViewController.h"
 #import "FormCDVViewController.h"
 #import "HistoryCDVViewController.h"
@@ -95,28 +90,16 @@
     DevCustomSetting *dev = [DevCustomSetting sharedInstance];
     
     UIViewController *vc = nil;
-    if (dev.isNative) {
-        if (dev.firstView == MainScreen) {
-            vc = [[[FirstViewController alloc] init] autorelease];
-        }else if (dev.firstView == AddScreen){
-            vc = [[[AddItemViewController alloc] init] autorelease];
-        }else if (dev.firstView == HistoryScreen){
-            vc = [[[HistoryViewController alloc] init] autorelease];
-        }
-        
-        self.window.rootViewController = vc;
-    }else{
-        
-        if (dev.firstView == MainScreen) {
-            vc = [[[MainCDVViewController alloc] init] autorelease];
-        }else if (dev.firstView == AddScreen){
-            vc = [[[FormCDVViewController alloc] init] autorelease];
-        }else if (dev.firstView == HistoryScreen){
-            vc = [[[HistoryCDVViewController alloc] init] autorelease];
-        }
-        
-        self.window.rootViewController = vc;
+    
+    if (dev.firstView == MainScreen) {
+        vc = [[[MainCDVViewController alloc] init] autorelease];
+    }else if (dev.firstView == AddScreen){
+        vc = [[[FormCDVViewController alloc] init] autorelease];
+    }else if (dev.firstView == HistoryScreen){
+        vc = [[[HistoryCDVViewController alloc] init] autorelease];
     }
+    
+    self.window.rootViewController = vc;
     
     [self.window makeKeyAndVisible];
 

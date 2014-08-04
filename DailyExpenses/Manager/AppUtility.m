@@ -12,5 +12,4 @@
 
 SynthensizeSingleTon(AppUtility)
 
-
 @end
