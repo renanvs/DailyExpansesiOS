@@ -73,6 +73,8 @@ SynthensizeSingleTon(ItemManager)
         model = [self getItemById:itemModelIdentifier];
         model.dateUpdated = [[DateUtility sharedInstance] getCurrentDateWithFormat:@"yyyy-MM-dd hh:mm:ss"];
     }else{
+        model = (ItemModel*)[[CoreDataService sharedInstance] createManagedObjectWithName:EntityItemModel];
+        model.identifier = [self createUniqueIdentifier];
         model.dateCreated = [[DateUtility sharedInstance] getCurrentDateWithFormat:@"yyyy-MM-dd hh:mm:ss"];
     }
     
@@ -92,6 +94,12 @@ SynthensizeSingleTon(ItemManager)
     [[CoreDataService sharedInstance] saveContext];
 
     return model;
+}
+
+-(NSString*)createUniqueIdentifier{
+    NSString *currentDate = [[DateUtility sharedInstance] getCurrentDateWithFormat:@"dd-MM-yyyy HH:mm:ss"];
+    
+    return [NSString encodeToBase64:currentDate];
 }
 
 -(ItemModel *)UpdateItemWithJson:(id)json{

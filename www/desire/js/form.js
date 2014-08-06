@@ -41,6 +41,8 @@ function finishedLoad(){
     $('#topBarLeftButton').click(function(e){
                 CordovaExec(function(){},"FormPlugin", "Back");
     });
+
+    $("input[type= 'date']")[0].value = getCurrentDate();
     
 	$('body').show();
 }
@@ -91,12 +93,17 @@ $('#topBarRightButton').click(function(){
 function getFormDatasToJson(){
 	var itemModel = new Object();
 	itemModel.description = $("#description")[0].value;
+	if (itemModel.description == "") {return false};
+
 	itemModel.price = $("#price")[0].value;
+	if (itemModel.price == "") {return false};
+
 	itemModel.categoryId = getFormController().selectedCategory.identifier;
 	itemModel.parcel = $("#parcelComboBox")[0].value.replace('x', '');
-	// dataA = $("input[type= 'date']")[0].value.split("-");
-	// dateB = dataA[0] + "-" + dateA[2] + "-" dateA[1]
+	
 	itemModel.dateSpent = $("input[type= 'date']")[0].value;
+	if (itemModel.dateSpent == "") {return false};
+
 	itemModel.notes = $("#notes")[0].value;
 	
 	if(currentType == TYPE.RENDIMENTOS){
@@ -120,7 +127,12 @@ function getFormDatasToJson(){
 		}
 		itemModel.spent = 1;
 	}
-	itemModel.identifier = currentItem.identifier;
+
+	if(currentItem){
+		itemModel.identifier = currentItem.identifier;
+	}
+
+	
 	// currentType.name;
 	// currentSpentType.name;
 	return itemModel;
@@ -128,11 +140,40 @@ function getFormDatasToJson(){
 
 function sendToCore(){
 	var model = getFormDatasToJson();
+
+	if (model == false) {
+		composeFieldErro();
+		return;
+	};
+
 	var jsonStr = JSON.stringify(model);
 	CordovaExec(function(itemModel){
             	//alert('should save');
             	populateFormWithItem(itemModel)
             }, "FormPlugin", "SendItem",[jsonStr]);
+}
+
+function composeFieldErro(){
+	alert('errro')
+}
+
+function getCurrentDate(){
+	var date = new Date();
+	day = date.getUTCDate();
+	month = date.getUTCMonth()+1;
+	year = date.getUTCFullYear();
+
+	if(day < 10){
+		day = '0'+day;
+	}
+
+	if(month < 10){
+		month = '0'+month;
+	}
+
+	var dateStr = year + '-' + month + '-' + day;
+
+	return dateStr
 }
 
 function populateFormWithItem(item){
@@ -181,9 +222,10 @@ function apply(){
 function CategoryListController($scope){
 	CordovaExec(function(catItens){
 		$scope.categoryItens = catItens;
+		apply();
 	}, "HistoryPlugin", "GetAllCategories");
 
-	$scope.selectedCategory = {name : "tttt", imagePath : "img/indice.svg"};
+	$scope.selectedCategory = {name : "Default", imagePath : "img/category_icons/icon_default.png"};
 
 	$scope.categorySelected = function(e){
 		$scope.selectedCategory  = e;

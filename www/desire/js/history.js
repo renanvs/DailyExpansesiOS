@@ -267,6 +267,13 @@ function finishedLoad(){
 		content : $('.popover').html(),
 		placement : 'bottom'
 	});
+
+	$('#topBarMiddleButton').click(function(){
+		CordovaExec(function(){
+		
+	}, "FormPlugin", "Back");
+	});
+
 	hideActiveFilterButton()
 	apply();
 
