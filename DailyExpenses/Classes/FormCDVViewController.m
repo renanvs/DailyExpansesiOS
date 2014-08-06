@@ -21,7 +21,8 @@
 
 - (void)viewDidLoad
 {
-    self.startPage = @"desire/index_form.html";
+//    self.startPage = @"desire/index_form.html";
+    self.startPage = [AppUtility baseUrlWithAppendPath:@"/index_form.html"];
     [super viewDidLoad];
     [[DevCustomSetting sharedInstance] setCurrentWebView:self.webView];
     // Do any additional setup after loading the view.

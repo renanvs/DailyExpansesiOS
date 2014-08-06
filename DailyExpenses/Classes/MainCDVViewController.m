@@ -12,7 +12,9 @@
 
 - (void)viewDidLoad
 {
-    self.startPage = @"desire/index_main.html";
+//    self.startPage = @"desire/index_main.html";
+    self.startPage = [AppUtility baseUrlWithAppendPath:@"/index_main.html"];
+    
     [super viewDidLoad];
     [[DevCustomSetting sharedInstance] setCurrentWebView:self.webView];
     // Do any additional setup after loading the view.

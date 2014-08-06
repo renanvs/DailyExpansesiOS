@@ -12,7 +12,7 @@
 
 @implementation DevCustomSetting
 
-@synthesize firstView, howMuchAppCreateOnInit, removeFakeItensOnInit, isTester, currentWebView;
+@synthesize firstView, howMuchAppCreateOnInit, removeFakeItensOnInit, isTester, currentWebView, htmlBasePath;
 
 SynthensizeSingleTon(DevCustomSetting);
 
@@ -26,6 +26,8 @@ SynthensizeSingleTon(DevCustomSetting);
         [self createVariatyItensModel];
         //[self createFakeItensModel];
         isTester = YES;
+        //htmlBasePath = @"desire/";
+        htmlBasePath = @"http://localhost:8080/";
     }
     
     return self;

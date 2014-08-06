@@ -20,11 +20,13 @@ typedef enum {
     int howMuchAppCreateOnInit;
     FirstView firstView;
     UIWebView *currentWebView;
+    NSString *htmlBasePath;
 }
 
 +(id)sharedInstance;
 
 @property (nonatomic, assign) bool isTester;
+@property (nonatomic, assign) NSString *htmlBasePath;
 @property (nonatomic, assign) bool removeFakeItensOnInit;
 @property (nonatomic, assign) FirstView firstView;
 @property (nonatomic, assign) UIWebView *currentWebView;

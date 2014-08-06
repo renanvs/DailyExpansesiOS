@@ -12,4 +12,8 @@
 
 +(id)sharedInstance;
 
++(NSString*)baseUrl;
+
++(NSString*)baseUrlWithAppendPath:(NSString*)path;
+
 @end

@@ -35,4 +35,5 @@
     #import "ItemManager.h"
     #import "Constants.h"
     #import "JsonUtility.h"
+    #import "AppUtility.h"
 #endif

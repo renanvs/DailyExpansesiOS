@@ -12,4 +12,13 @@
 
 SynthensizeSingleTon(AppUtility)
 
++(NSString *)baseUrl{
+    return [[DevCustomSetting sharedInstance] htmlBasePath];
+}
+
++(NSString*)baseUrlWithAppendPath:(NSString*)path{
+    NSString *fullPath = [NSString stringWithFormat:@"%@%@",[self baseUrl],path];
+    return fullPath;
+}
+
 @end
