@@ -36,6 +36,9 @@
         <param name="ios-package" value="CDVMainPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="GAPlugin">
+        <param name="ios-package" value="GAPlugin" />
+    </feature>
     <name>DailyExpenses</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.

@@ -1,5 +1,6 @@
 
 /////
+var gaPlugin;
 
 function onDeviceReady() {
     document.addEventListener("pause", onPause, false);
@@ -9,11 +10,25 @@ function onDeviceReady() {
        angular.bootstrap(document);
     });
 
+    gaPlugin = window.plugins.gaPlugin;
+    gaPlugin.init(successHandler, errorHandler, "UA-53613333-1", 10);
+
     beforeFineshedLoad();
     
     finishedLoad();
 
     afterFineshedLoad();
+}
+
+function successHandler (result) {
+    //alert('nativePluginResultHandler - '+result);
+    console.log('nativePluginResultHandler: '+result);
+
+}
+
+function errorHandler (error) {
+    //alert('nativePluginErrorHandler - '+error);
+    console.log('nativePluginErrorHandler: '+error);
 }
 
 function onPause() {
