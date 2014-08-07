@@ -30,6 +30,7 @@
 #import "MainCDVViewController.h"
 #import "FormCDVViewController.h"
 #import "HistoryCDVViewController.h"
+#import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
 
@@ -64,6 +65,9 @@
  */
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+    
+    [Crashlytics startWithAPIKey:@"112c4e2c88d4cf3b7bd4753fd5d8859ebac1f0ba"];
+    
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
 
 #if __has_feature(objc_arc)
