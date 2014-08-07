@@ -57,8 +57,8 @@ SynthensizeSingleTon(ItemManager)
     model.isDebitCard = [dic objectForKey:@"debit"];
     model.isMoney = [dic objectForKey:@"money"];
     NSString *currentDateWithHour = [[DateUtility sharedInstance] getCurrentDateWithHours];
-    model.dateCreated = currentDateWithHour;
-    model.identifier = [NSString encodeToBase64:currentDateWithHour];
+    model.dateCreated = [[DateUtility sharedInstance] getCurrentDateN];
+    model.identifier = [NSString encodeToBase64:[[DateUtility sharedInstance] getCurrentDateWithFormat:@"yyyy-MM-dd HH:mm:ss"]];
     model.category = [[CategoryManager sharedInstance] getCategoryById:[dic objectForKey:@"identifier"]];
     
     [[CoreDataService sharedInstance] saveContext];
@@ -71,17 +71,17 @@ SynthensizeSingleTon(ItemManager)
     NSString *itemModelIdentifier = [dic objectForKey:@"identifier"];
     if (![NSString isStringEmpty:itemModelIdentifier]) {
         model = [self getItemById:itemModelIdentifier];
-        model.dateUpdated = [[DateUtility sharedInstance] getCurrentDateWithFormat:@"yyyy-MM-dd hh:mm:ss"];
+        model.dateUpdated = [[DateUtility sharedInstance] getCurrentDateN];
     }else{
         model = (ItemModel*)[[CoreDataService sharedInstance] createManagedObjectWithName:EntityItemModel];
         model.identifier = [self createUniqueIdentifier];
-        model.dateCreated = [[DateUtility sharedInstance] getCurrentDateWithFormat:@"yyyy-MM-dd hh:mm:ss"];
+        model.dateCreated = [[DateUtility sharedInstance] getCurrentDateN];
     }
     
     model.label = [dic objectForKey:@"description"];
     model.parcel = [dic objectForKey:@"parcel"];
     model.value = [dic objectForKey:@"price"];
-    model.dateSpent = [dic objectForKey:@"dateSpent"];
+    model.dateSpent = [[DateUtility sharedInstance] getDateWithStringDate:[dic objectForKey:@"dateSpent"]];
     model.notes = [dic objectForKey:@"notes"];
     model.isMoneyOut = [dic objectForKey:@"spent"];
     model.isMoneyIn = [NSNumber numberWithBool:![model.isMoneyOut boolValue]];
@@ -123,7 +123,7 @@ SynthensizeSingleTon(ItemManager)
     model.isCreditCard = [formatter numberFromString:[dic objectForKey:@"creditCard"]];
     model.isDebitCard = [formatter numberFromString:[dic objectForKey:@"debit"]];
     model.isMoney = [formatter numberFromString:[dic objectForKey:@"money"]];
-    model.dateCreated = [[DateUtility sharedInstance] getCurrentDateWithHours];
+    model.dateCreated = [[DateUtility sharedInstance] getCurrentDateN];
     
     model.category = [[CategoryManager sharedInstance] getCategoryById:[dic objectForKey:@"identifier"]];
     
@@ -159,10 +159,40 @@ SynthensizeSingleTon(ItemManager)
     
     NSString *dateType = [dic objectForKey:@"dateType"];
     if ([dateType isEqualToString:@"specificDate"]) {
-        NSString *initDate = [dic objectForKey:@"initDate"];
-        NSString *endDate = [dic objectForKey:@"endDate"];
-        [query appendFormat:@"dateSpent >= %@ && ",initDate];
-        [query appendFormat:@"dateSpent <= %@ && ",endDate];
+        NSDate *initDate = [[DateUtility sharedInstance] getDateWithStringDate:[dic objectForKey:@"initDate"]];
+        NSDate *endDate = [[DateUtility sharedInstance] getDateWithStringDate:[dic objectForKey:@"endDate"]];
+
+        ///
+//        NSDate *s =  [initDate dateAtStartOfDay];
+//        NSDate *l =  [endDate dateAtEndOfDay];
+        ///
+        
+        
+        /////
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        gregorian.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+
+        NSDateComponents *dateComponents = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:initDate];
+
+        [dateComponents setHour:0];
+        [dateComponents setMinute:0];
+        [dateComponents setSecond:0];
+        NSDate *lowDate = [gregorian dateFromComponents:dateComponents];
+
+        dateComponents = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:endDate];
+
+        [dateComponents setHour:23];
+        [dateComponents setMinute:59];
+        [dateComponents setSecond:59];
+        NSDate *highDate = [gregorian dateFromComponents:dateComponents];
+        /////
+        
+        NSString *cs = [[NSPredicate predicateWithFormat:@"dateSpent >= %@",lowDate] predicateFormat];
+        NSString *cl = [[NSPredicate predicateWithFormat:@"dateSpent <= %@",highDate] predicateFormat];
+        
+        
+        [query appendFormat:@"(%@) && ",cs];
+        [query appendFormat:@"(%@) && ",cl];
     }
     
     NSString *description = [dic objectForKey:@"description"];

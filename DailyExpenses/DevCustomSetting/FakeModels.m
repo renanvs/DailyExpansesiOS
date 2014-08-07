@@ -13,8 +13,8 @@
 +(void)createVariatyOfItens{
     CoreDataService *cs = [CoreDataService sharedInstance];
     ItemModel *item0 = (ItemModel*)[cs createManagedObjectWithName:EntityItemModel];
-    item0.dateCreated = @"2010-03-18";
-    item0.dateSpent = @"2010-03-18";
+    item0.dateCreated = [[DateUtility sharedInstance] getDateWithStringDate:@"2010-03-18 12:12:12"];
+    item0.dateSpent = [[DateUtility sharedInstance] getDateWithStringDate:@"2014-08-07"];
     item0.isMoneyIn = [NSNumber numberWithBool:YES];
     item0.label = @"salario";
     item0.notes = @"vem que vem";
@@ -23,8 +23,8 @@
     item0.identifier = @"_0";
   
     ItemModel *item1 = (ItemModel*)[cs createManagedObjectWithName:EntityItemModel];
-    item1.dateCreated = @"2011-03-17";
-    item1.dateSpent = @"2011-03-17";
+    item1.dateCreated = [[DateUtility sharedInstance] getDateWithStringDate:@"2011-03-17 12:12:12"];
+    item1.dateSpent = [[DateUtility sharedInstance] getDateWithStringDate:@"2011-03-17"];
     item1.isCreditCard = [NSNumber numberWithBool:YES];
     item1.isMoneyOut = [NSNumber numberWithBool:YES];
     item1.label = @"agua";
@@ -35,8 +35,8 @@
     item1.category = [self categoryWithName:@"cocktail"];
 
     ItemModel *item2 = (ItemModel*)[cs createManagedObjectWithName:EntityItemModel];
-    item2.dateCreated = @"2011-01-01";
-    item2.dateSpent = @"2011-01-01";
+    item2.dateCreated = [[DateUtility sharedInstance] getDateWithStringDate:@"2011-01-01 12:12:12"];
+    item2.dateSpent = [[DateUtility sharedInstance] getDateWithStringDate:@"2011-01-01"];
     item2.isCreditCard = [NSNumber numberWithBool:YES];
     item2.isMoneyOut = [NSNumber numberWithBool:YES];
     item2.label = @"viagem";
@@ -47,8 +47,8 @@
     item2.category = [self categoryWithName:@"airplane"];
     
     ItemModel *item3 = (ItemModel*)[cs createManagedObjectWithName:EntityItemModel];
-    item3.dateCreated = @"2014-12-22";
-    item3.dateSpent = @"2014-12-22";
+    item3.dateCreated = [[DateUtility sharedInstance] getDateWithStringDate:@"2014-12-22 12:12:12"];
+    item3.dateSpent = [[DateUtility sharedInstance] getDateWithStringDate:@"2014-12-22"];
     item3.isMoney = [NSNumber numberWithBool:YES];
     item3.isMoneyOut = [NSNumber numberWithBool:YES];
     item3.label = @"notebook macbook";
@@ -59,8 +59,8 @@
     item3.category = [self categoryWithName:@"pc"];
     
     ItemModel *item4 = (ItemModel*)[cs createManagedObjectWithName:EntityItemModel];
-    item4.dateCreated = @"2014-12-22";
-    item4.dateSpent = @"2014-12-22";
+    item4.dateCreated = [[DateUtility sharedInstance] getDateWithStringDate:@"2014-12-22 12:12:12"];
+    item4.dateSpent = [[DateUtility sharedInstance] getDateWithStringDate:@"2014-12-22"];
     item4.isDebitCard = [NSNumber numberWithBool:YES];
     item4.isMoneyOut = [NSNumber numberWithBool:YES];
     item4.label = @"desktop";

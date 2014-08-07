@@ -24,6 +24,28 @@ SynthensizeSingleTon(DateUtility)
     return [formatter stringFromDate:[NSDate date]];
 }
 
+-(NSDate*)getCurrentDateN{
+    return [NSDate date];
+}
+
+-(NSDate*)getDateWithStringDate:(NSString*)dateStr{
+    NSDateFormatter *fm = [[NSDateFormatter alloc] init];
+    if (dateStr.length > 10) {
+        [fm setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    }else{
+        [fm setDateFormat:@"yyyy-MM-dd"];
+    }
+    
+    NSDate* date = [fm dateFromString:dateStr];
+    return date;
+}
+
+-(NSString*)getDateStringWithDate:(NSDate*)date AndFormat:(NSString*)format{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:format];
+    return [formatter stringFromDate:date];
+}
+
 -(NSString*)getCurrentDateWithHours{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"dd/MM/yyyy hh:mm:ss"];

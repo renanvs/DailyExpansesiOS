@@ -2,7 +2,7 @@
 //  ItemModel.m
 //  DailyExpenses
 //
-//  Created by renan veloso silva on 01/06/14.
+//  Created by renan veloso silva on 06/08/14.
 //
 //
 
@@ -16,16 +16,16 @@
 @dynamic dateCreated;
 @dynamic dateSpent;
 @dynamic dateUpdated;
+@dynamic identifier;
 @dynamic isCreditCard;
 @dynamic isDebitCard;
+@dynamic isMoney;
 @dynamic isMoneyIn;
 @dynamic isMoneyOut;
 @dynamic label;
 @dynamic notes;
 @dynamic parcel;
 @dynamic value;
-@dynamic isMoney;
-@dynamic identifier;
 @dynamic card;
 @dynamic category;
 

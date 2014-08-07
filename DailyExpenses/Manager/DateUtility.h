@@ -13,6 +13,11 @@
 +(id)sharedInstance;
 
 -(NSString*)getCurrentDate;
+-(NSDate*)getCurrentDateN;
+-(NSDate*)getDateWithStringDate:(NSString*)dateStr;
+-(NSString*)getDateStringWithDate:(NSDate*)date AndFormat:(NSString*)format;
+
+
 -(NSString*)getDayBefore:(NSString*)currentDate;
 -(NSString*)getDayAfter:(NSString*)currentDate;
 -(NSString*)getMonthByDate:(NSString*)dateS;

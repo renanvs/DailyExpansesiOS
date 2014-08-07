@@ -28,9 +28,18 @@
     [itemDic setString:itemModel.label forKey:JsonItemLabel];
     [itemDic setObject:itemModel.isMoneyOut forKey:JsonItemSpent];
     [itemDic setObject:itemModel.value forKey:JsonItemValue];
-    [itemDic setString:itemModel.dateCreated forKey:JsonItemDateCreated];
-    [itemDic setString:[self formatDateToHTML:itemModel.dateSpent] forKey:JsonItemDateSpent];
-    [itemDic setString:itemModel.dateUpdated forKey:JsonItemDateUpdated];
+    
+    NSString *dateCreated = [[DateUtility sharedInstance] getDateStringWithDate:itemModel.dateCreated AndFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateUpdated = [[DateUtility sharedInstance] getDateStringWithDate:itemModel.dateUpdated AndFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateSpent = [[DateUtility sharedInstance] getDateStringWithDate:itemModel.dateSpent AndFormat:@"yyyy-MM-dd"];
+    
+    
+    
+    [itemDic setString:dateCreated forKey:JsonItemDateCreated];
+    [itemDic setString:[self formatDateToHTML:dateSpent] forKey:JsonItemDateSpent];
+    
+    [itemDic setString:dateUpdated forKey:JsonItemDateUpdated];
+    
     [itemDic setObject:itemModel.isCreditCard forKey:JsonItemCreditCard];
     [itemDic setObject:itemModel.isDebitCard forKey:JsonItemDebit];
     [itemDic setObject:itemModel.isMoney forKey:JsonItemMoney];

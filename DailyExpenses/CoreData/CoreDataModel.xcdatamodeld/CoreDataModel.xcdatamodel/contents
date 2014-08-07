@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="1.0" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="1.0" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CardModel" representedClassName="CardModel" syncable="YES">
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -12,9 +12,9 @@
         <relationship name="itens" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ItemModel" inverseName="category" inverseEntity="ItemModel" syncable="YES"/>
     </entity>
     <entity name="ItemModel" representedClassName="ItemModel" syncable="YES">
-        <attribute name="dateCreated" attributeType="String" minValueString="0" defaultValueString=" " syncable="YES"/>
-        <attribute name="dateSpent" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dateUpdated" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateCreated" attributeType="Date" minDateTimeInterval="0" defaultDateTimeInterval="0" syncable="YES"/>
+        <attribute name="dateSpent" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateUpdated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="identifier" attributeType="String" syncable="YES"/>
         <attribute name="isCreditCard" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isDebitCard" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>

@@ -2,7 +2,7 @@
 //  CardModel.h
 //  DailyExpenses
 //
-//  Created by renan veloso silva on 01/06/14.
+//  Created by renan veloso silva on 06/08/14.
 //
 //
 

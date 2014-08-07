@@ -26,8 +26,8 @@ SynthensizeSingleTon(DevCustomSetting);
         [self createVariatyItensModel];
         //[self createFakeItensModel];
         isTester = YES;
-        //htmlBasePath = @"desire/";
-        htmlBasePath = @"http://localhost:8080/";
+        htmlBasePath = @"desire/";
+        //htmlBasePath = @"http://localhost:8080/";
     }
     
     return self;
@@ -57,12 +57,12 @@ SynthensizeSingleTon(DevCustomSetting);
     for (int i = 0; i < howMuchAppCreateOnInit; i++) {
         ItemModel *itemModel = (ItemModel*)[[CoreDataService sharedInstance] createManagedObjectWithName:EntityItemModel];
         
-        NSString *dateCreated = [[DateUtility sharedInstance] getCurrentDateWithHours];
+        NSDate *dateCreated = [[DateUtility sharedInstance] getCurrentDateN];
         itemModel.identifier = [NSString encodeToBase64:[NSString stringWithFormat:@"%@%d",dateCreated,i]];
         itemModel.dateCreated = dateCreated;
         itemModel.label = [NSString stringWithFormat:@"Fake - %@|%d",dateCreated,i];
         itemModel.value = [NSString stringWithFormat:@"%i", i];
-        itemModel.dateSpent = [[DateUtility sharedInstance] getCurrentDateWithFormat:@"yyyy-dd-MM"];
+        itemModel.dateSpent = dateCreated;
         
         BOOL value = fmod(i, 2) == 0 ? YES : NO;
         
