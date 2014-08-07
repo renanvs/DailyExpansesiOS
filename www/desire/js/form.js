@@ -14,7 +14,6 @@ var currentType = TYPE.RENDIMENTOS;
 var currentSpentType = SPENTTYPE.UNDEFINED;
 var currentItem;
 
-
 ////
 var rendimentoRadio = $('form').find('input[value="Rendimento"]')[0]
 var despesaRadio = $('form').find('input[value="Despesa"]')[0]
@@ -23,30 +22,17 @@ var creditoRadio = $('form').find('input[value="Credito"]')[0]
 var debitoRadio = $('form').find('input[value="Debito"]')[0]
 ////
 
-$(document).ready(function(){
-	startLoad();
-});
-
-function startLoad(){
-	$('body').hide();
-}
-
 function finishedLoad(){
 	CordovaExec(function(item){
 		populateFormWithItem(item)
-  //       setTimeout(function(){populateFormWithItem(item);
-		// },15000)
     }, "FormPlugin", "Populate");
     
     $('#topBarLeftButton').click(function(e){
-                CordovaExec(function(){},"FormPlugin", "Back");
+        CordovaExec(function(){},"FormPlugin", "Back");
     });
 
-    $("input[type= 'date']")[0].value = getCurrentDate();
-    
-	$('body').show();
+    $("input[type= 'date']")[0].value = Utils.GetCurrentDate();
 }
-
 
 $('input[name=type]').on('change', function(){
 	updateRadios();
@@ -98,7 +84,7 @@ function getFormDatasToJson(){
 	itemModel.price = $("#price")[0].value;
 	if (itemModel.price == "") {return false};
 
-	itemModel.categoryId = getFormController().selectedCategory.identifier;
+	itemModel.categoryId = Utils.GetController().selectedCategory.identifier;
 	itemModel.parcel = $("#parcelComboBox")[0].value.replace('x', '');
 	
 	itemModel.dateSpent = $("input[type= 'date']")[0].value;
@@ -132,9 +118,6 @@ function getFormDatasToJson(){
 		itemModel.identifier = currentItem.identifier;
 	}
 
-	
-	// currentType.name;
-	// currentSpentType.name;
 	return itemModel;
 }
 
@@ -148,7 +131,6 @@ function sendToCore(){
 
 	var jsonStr = JSON.stringify(model);
 	CordovaExec(function(itemModel){
-            	//alert('should save');
             	populateFormWithItem(itemModel)
             }, "FormPlugin", "SendItem",[jsonStr]);
 }
@@ -157,32 +139,11 @@ function composeFieldErro(){
 	alert('errro')
 }
 
-function getCurrentDate(){
-	var date = new Date();
-	day = date.getUTCDate();
-	month = date.getUTCMonth()+1;
-	year = date.getUTCFullYear();
-
-	if(day < 10){
-		day = '0'+day;
-	}
-
-	if(month < 10){
-		month = '0'+month;
-	}
-
-	var dateStr = year + '-' + month + '-' + day;
-
-	return dateStr
-}
-
 function populateFormWithItem(item){
-	//alert(item.dateSpent);
 	currentItem = item;
 	$("#description")[0].value = item.label;
 	$("#price")[0].value = item.value.replace(',','.');
-	//$("#categoryId")[0].textContent = item.categoryId;
-	getFormController().setCurrentCategoryById(item.category.identifier);
+	Utils.GetController().setCurrentCategoryById(item.category.identifier);
 	$("#parcelComboBox")[0].selectedIndex = item.parcel -1;
 	var aDate = currentItem.dateSpent.split('-');
 	var bDate = aDate[0] + '-' + aDate[2] + '-' + aDate[1];
@@ -201,28 +162,14 @@ function populateFormWithItem(item){
 		}
 		despesaRadio.click();
 	}
-	apply();
-}
-
-
-
-function getFormController(){
-	var formController = angular.element($("body")).scope();
-	if (formController) {
-		return formController;
-	};
-
-	return;
-}
-
-function apply(){
-	getFormController().$apply();
+	Utils.Apply();
 }
 
 function CategoryListController($scope){
 	CordovaExec(function(catItens){
 		$scope.categoryItens = catItens;
-		apply();
+		if (!Utils.HasMock()) {Utils.Apply();};
+		
 	}, "HistoryPlugin", "GetAllCategories");
 
 	$scope.selectedCategory = {name : "Default", imagePath : "img/category_icons/icon_default.png"};

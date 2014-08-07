@@ -18,9 +18,117 @@ var orderAscDescType = ORDERASCDESCTYPE.ASC;
 var spentCheckboxCheckedCount = 0;
 /////////////////////////////////////////////
 
-$(document).ready(function(){
-	startLoad();
+/////////Filter Form////////////////////////////
+var filterJson = {};
+$('#filterButton').click(function(){
+	filterJson = {};
 
+	var key;
+	var value;
+
+	key = "dateType";
+	value = $('input[name = "date"]:checked')[0].getAttribute('value');
+	addToFilterJson(key, value);
+
+	key = $('input[name = "initDate"]')[0].getAttribute('name');
+	value = $('input[name = "initDate"]')[0].value
+	addToFilterJson(key, value);
+
+	key = $('input[name = "endDate"]')[0].getAttribute('name');
+	value = $('input[name = "endDate"]')[0].value
+	addToFilterJson(key, value);
+
+	key = $('input[name = "description"]')[0].getAttribute('name');
+	value = $('input[name = "description"]')[0].value
+	addToFilterJson(key, value);
+
+	key = $('input[name = "includeNotes"]')[0].getAttribute('name');
+	value = $('input[name = "includeNotes"]')[0].checked;
+	addToFilterJson(key, value);
+
+	key = $('input[value = "moneyIn"]')[0].getAttribute('value');
+	value = $('input[value = "moneyIn"]')[0].checked;
+	addToFilterJson(key, value);
+
+	key = $('input[value = "money"]')[0].getAttribute('value');
+	value = $('input[value = "money"]')[0].checked;
+	addToFilterJson(key, value);
+
+	key = $('input[value = "debit"]')[0].getAttribute('value');
+	value = $('input[value = "debit"]')[0].checked;
+	addToFilterJson(key, value);
+
+	key = $('input[value = "credit"]')[0].getAttribute('value');
+	value = $('input[value = "credit"]')[0].checked;
+	addToFilterJson(key, value);
+
+	if(spentCheckboxCheckedCount > 0){
+		//key = $('input[name = "categories"]:checked')[0].getAttribute('name')
+		key = "CategoryType";
+		value = $('input[name = "categories"]:checked')[0].getAttribute('value')
+		addToFilterJson(key, value);
+	}
+
+	key = $('input[name = "initValue"]')[0].getAttribute('name');
+	value = $('input[name = "initValue"]')[0].value;
+	addToFilterJson(key, value);
+
+	key = $('input[name = "endValue"]')[0].getAttribute('name');
+	value = $('input[name = "endValue"]')[0].value;
+	addToFilterJson(key, value);
+
+	key = 'categoriesSelected';
+	value = [];
+	var catSelectedList = Utils.GetController().selectedCategories;
+	for (var i = 0; i < catSelectedList.length; i++) {
+		var cat = catSelectedList[i];
+		value.push(cat.identifier)
+	};
+	addToFilterJson(key, value);
+	
+	CordovaExec(function(filterList){
+		Utils.GetController().itensList = filterList;
+		Utils.Apply();
+	}, "HistoryPlugin", "Filter",[JSON.stringify(filterJson)]);
+
+	$('#backButton').click();
+	showActiveFilterButton();
+})
+
+function addToFilterJson (key, value){
+	filterJson[key] = value;
+}
+////////////////////////////////////////////////
+
+/////////// Order Methods ////////////////////////////////////////////////
+function invisibleOrderButtonPressed(e){
+	var orderName = e.getAttribute('data');
+	orderType = getOrderTypeByName(orderName);
+	orderAscDescType = getAscDescTypeByName($('input:radio[name = "order"]:checked')[0].value);
+	Utils.GetController().orderItens();
+	Utils.Apply();
+}
+
+function getOrderTypeByName (name){
+	for (property in ORDERTYPE){
+		var currentName = (ORDERTYPE[property].label);
+		if (currentName == name) {
+			return ORDERTYPE[property];
+		};
+	}
+}
+
+function getAscDescTypeByName (name){
+	for (property in ORDERASCDESCTYPE){
+		var currentName = (ORDERASCDESCTYPE[property].name);
+		if (currentName == name) {
+			return ORDERASCDESCTYPE[property];
+		};
+	}
+}
+/////////////////////////////////////////////
+
+function startLoad(){
 	//Popover button pressed
 	$('body').on('click', 'button.invisibleOrderButton', function(){
 		invisibleOrderButtonPressed(this);
@@ -40,8 +148,8 @@ $(document).ready(function(){
 	$('#filterActiveDiv').click(function(){
 		CordovaExec(function(itensListStr){
 			//alert(itensListStr[0].label);
-			getHistoryController().itensList = itensListStr;
-			apply();
+			Utils.GetController().itensList = itensListStr;
+			Utils.Apply();
 			hideActiveFilterButton();
 		}, "HistoryPlugin", "GetAllItens");
 	});
@@ -112,156 +220,9 @@ $(document).ready(function(){
 		}
 		$('#categoriesContainer')[showHide]("blind",600);
 	})
-	//////////////////////////////////////////////////////////////////////
-
-});
-
-/////////Filter Form////////////////////////////
-var filterJson = {};
-$('#filterButton').click(function(){
-	filterJson = {};
-
-	var key;
-	var value;
-
-	//{"dateType":"2014-07-30","endDate":"2014-07-30","description":"rtfghfgh",
-	//"includeNotes":true,"moneyIn":true,"money":false,"debit":true,"credit":false,
-	//"CategoryType":"selectedCategories","initValue":"1","endValue":"2",
-	//"categoriesSelected":["10","14","4"]}
-
-	//date checkbox
-	//key = 	$('input[name = "date"]:checked')[0].getAttribute('name');
-	key = "dateType";
-	value = $('input[name = "date"]:checked')[0].getAttribute('value');
-	addToFilterJson(key, value);
-
-	//date text - init
-	key = $('input[name = "initDate"]')[0].getAttribute('name');
-	value = $('input[name = "initDate"]')[0].value
-	addToFilterJson(key, value);
-
-	//date text - end
-	key = $('input[name = "endDate"]')[0].getAttribute('name');
-	value = $('input[name = "endDate"]')[0].value
-	addToFilterJson(key, value);
-
-	//description text
-	key = $('input[name = "description"]')[0].getAttribute('name');
-	value = $('input[name = "description"]')[0].value
-	addToFilterJson(key, value);
-
-	//include notes search
-	key = $('input[name = "includeNotes"]')[0].getAttribute('name');
-	value = $('input[name = "includeNotes"]')[0].checked;
-	addToFilterJson(key, value);
-
-	//include Rendimento
-	key = $('input[value = "moneyIn"]')[0].getAttribute('value');
-	value = $('input[value = "moneyIn"]')[0].checked;
-	addToFilterJson(key, value);
-
-	//include Dinheiro
-	key = $('input[value = "money"]')[0].getAttribute('value');
-	value = $('input[value = "money"]')[0].checked;
-	addToFilterJson(key, value);
-
-	//include Débito
-	key = $('input[value = "debit"]')[0].getAttribute('value');
-	value = $('input[value = "debit"]')[0].checked;
-	addToFilterJson(key, value);
-
-	//include Crédito
-	key = $('input[value = "credit"]')[0].getAttribute('value');
-	value = $('input[value = "credit"]')[0].checked;
-	addToFilterJson(key, value);
-
-	//Categories
-	if(spentCheckboxCheckedCount > 0){
-		//key = $('input[name = "categories"]:checked')[0].getAttribute('name')
-		key = "CategoryType";
-		value = $('input[name = "categories"]:checked')[0].getAttribute('value')
-		addToFilterJson(key, value);
-	}
-
-	//initValue
-	key = $('input[name = "initValue"]')[0].getAttribute('name');
-	value = $('input[name = "initValue"]')[0].value;
-	addToFilterJson(key, value);
-
-	//endValue
-	key = $('input[name = "endValue"]')[0].getAttribute('name');
-	value = $('input[name = "endValue"]')[0].value;
-	addToFilterJson(key, value);
-
-	//categoriesSelecteds
-	key = 'categoriesSelected';
-	value = [];
-	var catSelectedList = getHistoryController().selectedCategories;
-	for (var i = 0; i < catSelectedList.length; i++) {
-		var cat = catSelectedList[i];
-		value.push(cat.identifier)
-	};
-	addToFilterJson(key, value);
-	
-	CordovaExec(function(filterList){
-		getHistoryController().itensList = filterList;
-		apply();
-	}, "HistoryPlugin", "Filter",[JSON.stringify(filterJson)]);
-
-	$('#backButton').click();
-	showActiveFilterButton();
-})
-
-function addToFilterJson (key, value){
-	filterJson[key] = value;
-}
-////////////////////////////////////////////////
-
-/////////// Order Methods ////////////////////////////////////////////////
-function invisibleOrderButtonPressed(e){
-	var orderName = e.getAttribute('data');
-	orderType = getOrderTypeByName(orderName);
-	orderAscDescType = getAscDescTypeByName($('input:radio[name = "order"]:checked')[0].value);
-	getHistoryController().orderItens();
-	apply();
-
-}
-
-function getOrderTypeByName (name){
-	for (property in ORDERTYPE){
-		var currentName = (ORDERTYPE[property].label);
-		if (currentName == name) {
-			return ORDERTYPE[property];
-		};
-	}
-}
-
-function getAscDescTypeByName (name){
-	for (property in ORDERASCDESCTYPE){
-		var currentName = (ORDERASCDESCTYPE[property].name);
-		if (currentName == name) {
-			return ORDERASCDESCTYPE[property];
-		};
-	}
-}
-/////////////////////////////////////////////
-
-/////////// Angular /////////////////////////////
-function getHistoryController(){
-	var historyController = angular.element($("body")).scope();
-	if (historyController) {
-		return historyController;
-	};
-
-	return;
-}
-
-function startLoad(){
-	$('body').hide();
 }
 
 function finishedLoad(){
-	//alert('fi');
 	$('#topBarLeftButton').popover({
 		html : true,
 		content : $('.popover').html(),
@@ -275,16 +236,17 @@ function finishedLoad(){
 	});
 
 	hideActiveFilterButton()
-	apply();
+	Utils.Apply();
 
-	$('body').show();
+	
+	$('input[name = "initDate"]')[0].value = Utils.GetCurrentDate();
+	$('input[name = "endDate"]')[0].value = Utils.GetCurrentDate();
 }
 
 function setupTester(){
 	//$("#topBarRightButton").click(function(){alert('click')})
 
 	//mockFilter1();
-
 }
 
 function mockFilter1(){
@@ -327,45 +289,17 @@ function mockFilter0(){
 	$('input[name = "initValue"]')[0].value = "11.11"
 	$('input[name = "endValue"]')[0].value = "22.22"
 
-	var tempCat = getHistoryController().selectedCategories;
-	var itemTemp = getHistoryController().categoryItens[1];
+	var tempCat = Utils.GetController().selectedCategories;
+	var itemTemp = Utils.GetController().categoryItens[1];
 	tempCat.push(itemTemp);
-	var itemTemp = getHistoryController().categoryItens[2];
+	var itemTemp = Utils.GetController().categoryItens[2];
 	tempCat.push(itemTemp);
-}
-
-function apply(){
-
-	if (!hasMock()) {
-		getHistoryController().$apply();
-	};
-}
-
-function hasMock(){
-	var list = $('script');
-	var hasMockBool = false;
-	for (var i = 0; i < list.length; i++) {
-		var src = list[i].getAttribute('src');
-		if (src == null) {
-			continue;
-		};
-		if (src.indexOf('mock') >= 0) {
-			hasMockBool = true;
-			break;
-		}
-	};
-	return hasMockBool;
-	
-	// var hMock = false;
-	// hMock = window.location.toString().indexOf("t=1") == -1 ? false : true;
-	// return hMock;
 }
 
 var isTester = false;
 
 function HistoryController($scope){
 	CordovaExec(function(value){
-		//alert(value);
 		isTester = value;
 
 		if (isTester) {
@@ -375,9 +309,11 @@ function HistoryController($scope){
 	}, "UtilsPlugin", "IsTester");
 
 	CordovaExec(function(itensListStr){
-		//alert(itensListStr[0].label);
 		$scope.itensList = itensListStr;
-		apply();
+		if (!Utils.HasMock()) {
+			Utils.Apply();
+		};
+		
 	}, "HistoryPlugin", "GetAllItens");
 
 	$scope.selectedCategories = [];
@@ -410,15 +346,11 @@ function HistoryController($scope){
 			};
 		});
 		
-		//var color;
-
 		if (selected) {
 			desireTr.setAttribute('style', bg)
 		}else{
 			desireTr.setAttribute('style', '')
 		}
-
-		//desireTr.style.backgroundColor = color;
 	}
 
 	$scope.orderItens = function(){
@@ -427,12 +359,10 @@ function HistoryController($scope){
 
 	$scope.selectedItem = function(item){
 		CordovaExec(function(_itemId){
-			 //alert(_itemId);
 		}, "HistoryPlugin", "ShowForm", [item.identifier]);
 	}
 
 	$scope.orderList = createOrderListToController();
-	//apply();
 
 	function createOrderListToController(){
 		var list = [];
@@ -445,12 +375,12 @@ function HistoryController($scope){
 
 	CordovaExec(function(catItensStr){
 		$scope.categoryItens = catItensStr;
-		apply();
+		if (!Utils.HasMock()) {
+			Utils.Apply();
+		};
+		
 	}, "HistoryPlugin", "GetAllCategories");
 }
-
-var full;
-////////////////////////////////////////////////
 
 //////////// Others ///////////////////////////
 function sortResults(list, prop, asc) {

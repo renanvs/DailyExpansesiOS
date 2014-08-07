@@ -1,28 +1,22 @@
-$(document).ready(function(){
-	startLoad();
-	
-	$('#buttonInclude').click(function(){
+
+$('#buttonInclude').click(function(){
+	if (Utils.HasMock()) {
+		alert('button Include pressed')
+	}else{
 		CordovaExec(function(catItens){
-			
+		
 		}, "MainPlugin", "GoToForm");
-	});
-
-	$('#buttonList').click(function(){
-		CordovaExec(function(catItens){
-			
-		}, "MainPlugin", "GoToHistory");
-	});
-
+	}
 });
 
-
-
-function startLoad(){
-	$('body').hide();
-}
-
-function finishedLoad(){
-	$('body').show();
-}
-
+$('#buttonList').click(function(){
+	if (Utils.HasMock()) {
+		alert('button List pressed')
+	}else{
+		CordovaExec(function(catItens){
+		
+		}, "MainPlugin", "GoToHistory");
+	}
+		
+});
 

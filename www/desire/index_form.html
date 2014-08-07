@@ -35,32 +35,13 @@
     <![endif]-->
 	
  	<script src="js/cordova-exec-wrapper.js"></script>
+
+ 	<script src="js/essential.js"></script>
  	
     <script type="text/javascript">
        	//var cordovaJs = document.createElement("script");
         //cordovaJs.src = window.location.toString().indexOf("test=1") == -1 ? "cordova.js" : "cordova.mock.js";
         //$("head").append(cordovaJs);
-
-        function onDeviceReady() {
-            document.addEventListener("pause", onPause, false);
-            document.addEventListener("resume", onResume, false);
-
-            angular.element(document).ready(function() {
-               angular.bootstrap(document);
-            });
-
-            finishedLoad();
-        }
-
-        function onPause() {
-            CordovaExec(function(){}, "FormPlugin", "OnPauseReceived");
-        }
-
-        function onResume() {
-            CordovaExec(function(){}, "FormPlugin", "OnResumeReceived");
-        }
-
-        document.addEventListener("deviceready", onDeviceReady, false);
 
         function reset(){
           CordovaExec(function() {
@@ -255,8 +236,9 @@
   //       $("head").append(cordovaJs);
 	</script>
 
-   <script src="js/cordova.js"></script>
+   	<script src="js/cordova.js"></script>
     <script src="js/angular.min.js"></script>
+    <script src="js/utils.js"></script>
     <script src="js/form.js"></script>
     
     
