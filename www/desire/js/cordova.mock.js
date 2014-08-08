@@ -64,7 +64,7 @@ window.cordova = {
 	}
 };
 
-var sampleCategoriesCount = 10;
+var sampleCategoriesCount = 4;
 
 function getSampleCategories(){
 	var object = [];

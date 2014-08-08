@@ -11,7 +11,7 @@
     <link href="css/bootstrap-select.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/ui-lightness/jquery-ui-1.10.4.css" rel="stylesheet">
-    <link href="css/history.css" rel="stylesheet">
+    <link href="css/test.css" rel="stylesheet">
 
     
     <script src="js/jquery.min.js"></script>
@@ -19,323 +19,57 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-ui-1.10.4.js"></script>
     
+    
 	
- 	<script src="js/cordova-exec-wrapper.js"></script>
- 	
-    <script type="text/javascript">
+    <script src="js/cordova-exec-wrapper.js"></script>
 
-        function onDeviceReady() {
-            document.addEventListener("pause", onPause, false);
-            document.addEventListener("resume", onResume, false);
-            //$('body')[0].setAttribute('ng-controller', 'HistoryController')
-            angular.element(document).ready(function() {
-               angular.bootstrap(document);
-            });
+    <script src="js/essential.js"></script>
 
-            finishedLoad();
-        }
 
-        function onPause() {
-           // CordovaExec(function(){}, "HistoryPlugin", "OnPauseReceived");
-        }
-
-        function onResume() {
-           // CordovaExec(function(){}, "HistoryPlugin", "OnResumeReceived");
-        }
-
-        document.addEventListener("deviceready", onDeviceReady, false);
-
-  </script>
-
-  <script type="text/javascript">
-            function buttonPressed(){
-                location.reload(true);
-            }
-
-            function test(){
-                CordovaExec(function(msg){
-                    alert(msg);
-                }, "UtilsPlugin", "TestCordova", ["ggggggg"]);
-
-                
-            }
-        </script>
 
   </head>
   
-  <body ng-controller='HistoryController' >
+  <body>
 
-    <button onclick="buttonPressed()" style="position: absolute;top: 41px;left: 30px;">reload</button>
-    
+    <nav>
+      <ul class="list-unstyled main-menu">
 
-  	<div id="topBar" class="navbar navbar-default navbar-fixed-top topBarHeight">
-  		<div class="row parentCenter">
-  			<div class="col-xs-3 vCenter">
-  				<button type="button" id="topBarLeftButton" class="btn btn-primary">Ordenar</button>
-			</div>
-			<div class="col-xs-6 vCenter" >
-  				<p class="text-center" id="topBarTitle">Daily Expenses</p>
-			</div>
-			<div class="col-xs-3 vCenter">
-  				<button type="button" class="btn btn-primary" id="topBarRightButton" data-toggle="modal" data-target=".bs-example-modal-lg">Filtro</button>
-			</div>
-		</div>
-	</div>
-  
-  <div class="popover">
-		<div class="radio radioOrder">
-			  <label>
-				<input type="radio" name="order" value="asc" checked>
-				Crescente
-			  </label>
-		</div>
-		<div class="radio radioOrder">
-			  <label>
-				<input type="radio" name="order" value="desc">
-				Decrescente
-			  </label>
-		</div>
-			<table class="table">
-				<tr class="active trOrder" ng-repeat="order in orderList">
-	   				<td class="tdOrder" align="center" style="vertical-align: middle">
-	   					<button data="{{order.label}}" type="button" class="btn invisibleOrderButton">{{order.label}}</button>
-	   				</td>
-	   			</tr>
-   		</table>
-	</div>
+        <!--Include your navigation here-->
+        <li class="text-right"><a href="#" id="nav-close">X</a></li>
+        <li><a href="#">Menu One <span class="icon"></span></a></li>
+        <li><a href="#">Menu Two <span class="icon"></span></a></li>
+        <li><a href="#">Menu Three <span class="icon"></span></a></li>
+        <li><a href="#">Dropdown</a>
+          <ul class="list-unstyled">
+              <li class="sub-nav"><a href="#">Sub Menu One <span class="icon"></span></a></li>
+              <li class="sub-nav"><a href="#">Sub Menu Two <span class="icon"></span></a></li>
+              <li class="sub-nav"><a href="#">Sub Menu Three <span class="icon"></span></a></li>
+              <li class="sub-nav"><a href="#">Sub Menu Four <span class="icon"></span></a></li>
+              <li class="sub-nav"><a href="#">Sub Menu Five <span class="icon"></span></a></li>
+          </ul>
+        </li>
+        <li><a href="#">Menu Four <span class="icon"></span></a></li>
+        <li><a href="#">Menu Five <span class="icon"></span></a></li>
+      </ul>
+    </nav>
 
-	<div class="topBarHeight"></div>
+    <div class="navbar navbar-inverse navbar-fixed-top">      
 
-	<div class="container">
-   		<table class="table">
-   			<tr class="info trItem" ng-repeat="item in itensList" ng-click="selectedItem(item)">
-   				<td  align="center" class ="tdItem" style="vertical-align: middle">
-            <div ng-class="{'redCircleDiv' : item.spent, 'blueCircleDiv' : !item.spent}"></div>
-          </td>
-   				<td align="center" class ="tdItem" style="vertical-align: middle"><p>{{item.label}}</p></td>
-   				<td align="center" class ="tdItem" style="vertical-align: middle"><p>R$ {{item.value}}</p></td>
-   				<td align="center" class ="tdItem" style="vertical-align: middle">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-          </td>
-   			</tr>
-   		</table>
-	</div> 
-
-  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="myModalLabel">Filtro</h4>
+        <!--Include your brand here-->
+        <div class="navbar-header pull-left">
+          <a id="nav-expander" class="nav-expander fixed">
+            MENU &nbsp;<i class="fa fa-bars fa-lg white"></i>
+          </a>
         </div>
-        <div class="modal-body" id="filterDiv">
-          
-          <form role="form">
-            <div class="row">
-            <div class="col-lg-5 col-xs-5 ">
-            <div class="radio">
-              <label>
-              <input type="radio" name="date" value="allDate" checked>
-              Todos dias
-              </label>
-            </div>
-            </div>
-            <div class="col-lg-2 col-xs-2">
-            </div>
-
-            <div class="col-lg-5 col-xs-5 ">
-            <div class="radio">
-              <label>
-              <input type="radio" name="date" value="specificDate" >
-              Especificar data
-              </label>
-            </div>
-            </div>
-          </div>
-
-            <div class="form-group input-group-lg" id="dateContainer" style="display:none">
-            <div class="row">
-              <div class="col-xs-6">
-                <label for="description">Data Inicial</label>
-                <input type="date" class="form-control" name="initDate" style="height: 40px;">
-              </div>
-              <div class="col-xs-6">
-                <label for="description">Data Final</label>
-                <input type="date" class="form-control" name="endDate" style="height: 40px;">
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group input-group-lg">
-            <label for="description">Descrição</label>
-            <input type="text" class="form-control" name="description" placeholder="alguma palavra que exista na descrição">
-            <input type="checkbox" name="includeNotes">Incluir busca nas notas
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-5 col-xs-5 ">
-            <div class="checkbox">
-              <label>
-              <input type="checkbox" name="moneyInOut" value="moneyIn">
-              Rendimento
-              </label>
-            </div>
-            </div>
-            <div class="col-lg-2 col-xs-2">
-            </div>
-
-            <div class="col-lg-5 col-xs-5 ">
-            <p>Despesas</p>
-            </div>
-          </div>
-          
-          <br/>
-          
-          <div id="typeSpent">
-            <div class="row">
-              <div class="col-lg-4 col-xs-4 col-xs-offset-7 ">
-              <div class="checkbox">
-                <label>
-                <input type="checkbox" name="moneyInOut" value="money" >
-                Dinheiro
-                </label>
-              </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-4 col-xs-4 col-xs-offset-7 ">
-              <div class="checkbox">
-                <label>
-                <input type="checkbox" name="moneyInOut" value="debit" >
-                Débito
-                </label>
-              </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-4 col-xs-4 col-xs-offset-7 ">
-              <div class="checkbox">
-                <label>
-                <input type="checkbox" name="moneyInOut" value="credit" >
-                Crédito
-                </label>
-              </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="row" id="categoriesCheckContainer" style="display:none">
-            <div class="col-lg-5 col-xs-5 ">
-            <div class="radio">
-              <label>
-              <input type="radio" name="categories" value="allCategories" checked>
-              Todas Categorias
-              </label>
-            </div>
-            </div>
-            <div class="col-lg-2 col-xs-2">
-            </div>
-
-            <div class="col-lg-5 col-xs-5 ">
-            <div class="radio">
-              <label>
-              <input type="radio" name="categories" value="selectedCategories" >
-              Especificar Categorias
-              </label>
-            </div>
-            </div>
-          </div>
-
-          <div class="container containerCategoryFilter" id="categoriesContainer" style="display:none">
-            <table class="table">
-                  <tr ng-repeat="category in categoryItens" ng-click="categorySelected(category)" class="categoryTr" data={{category.identifier}}>
-                    <td><img ng-src={{category.imagePath}} ></td>
-                    <td style="vertical-align: middle;"><p>{{category.name}}</p></td>
-                  </tr>
-                </table>
-          </div>    
-
-          <div class="row">
-            <div class="col-lg-4 col-xs-4 ">
-            <div class="radio">
-              <label>
-              <input type="radio" name="valueType" value="AnyValue" checked>
-              Qualquer Valor
-              </label>
-            </div>
-            </div>
-            
-            <div class="col-lg-4 col-xs-4">
-              <div class="radio">
-              <label>
-              <input type="radio" name="valueType" value="SpecificValue" >
-              Valor Especifico
-              </label>
-            </div>
-            </div>
-
-            <div class="col-lg-4 col-xs-4 ">
-            <div class="radio">
-              <label>
-              <input type="radio" name="valueType" value="ValueInterval" >
-              Intervalo de valores
-              </label>
-            </div>
-            </div>
-          </div>
-
-          <div class="form-group input-group-lg" id="valueContainer" style="display : none">
-            
-            <div class="row">
-              <div class="col-xs=6 col-lg-6" id="startValueContainer">
-                <label for="description">Valor Inicial</label>
-                <div class="input-group">
-                  <span class="input-group-addon">R$</span>
-                  <input type="number" class="form-control" placeholder="99,99" name="initValue">
-                </div>
-              </div>
-              <div class="col-xs=6 col-lg-6" id="endValueContainer">
-                <label for="description">Valor Final</label>
-                <div class="input-group">
-                  <span class="input-group-addon">R$</span>
-                  <input type="number" class="form-control" placeholder="99,99" name="endValue">
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          
-        </form>
-         
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" id="backButton">Voltar</button>
-          <button type="button" class="btn btn-primary" id="filterButton">Filtrar</button>
-        </div>
-      </div>
+        <a class="navbar-brand" href="#">Off Canvas Menu</a>
+        
     </div>
-  </div>
-  </div> 
+
     
-  
-
-  <script type="text/javascript">
-    // var cordovaJs = document.createElement("script");
-    //     cordovaJs.src = window.location.toString().indexOf("t=1") == -1 ? "cordova.js" : "cordova.mock.js";
-    //     $("head").append(cordovaJs);
-
-      // if(window.location.toString().indexOf("t=1") == -1)
-      // {
-      //     document.write('<script src="cordova.js"/>');
-      // }
-      // else
-      // {
-      //     document.write("<script src='cordova.mock.js'/>");
-      // }
-  
-  </script>
-  <script src="js/cordova.js"></script>
-  <script src="js/angular.min.js"></script>
-  <script src="js/history.js"></script>
+    <script src="js/jquery.navgoco.js"></script>
+    <script src="js/cordova.mock.js"></script>
+    <script src="js/GAPlugin.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/test.js"></script>
   </body>
 </html>
